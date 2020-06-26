@@ -1,0 +1,45 @@
+\documentclass{article}
+
+\title{Introduction}
+
+
+\begin{document}
+\maketitle
+\noindent
+Growth is a fundamental property of life. External resources are absorbed, transformed and incorporated in a continuous process of expansion. Individual entities compete for these resources in a constant struggle for survival and proliferation.\newline
+Just as fundamental as growth itself, is its regulation. Smaller entities assemble in larger units by coordination. Prime examples of failed regulation are overexpression of cell components, cancerous cell growth in multicellular lifeforms or the current economic and political  system.\newline
+\newline
+
+\section{Aim Of This Work}
+This project has two parents, both models that originate from the same research group. Even though sharing a common theme- the growth of \textit{s.cerevisiae}- they look at it from two very different angels. To merge these approaches in one model is the aim of this work.
+\begin{itemize}
+    \item \textbf{Osmolyte homeostasis controls single-cell growth rate and maximum cell size of Saccharomyces cerevisiae} (published 2019 in npj Systems Biology and Applications by T.Altenburg, B.Goldenbogen, J.Uhlendorf and  E.Klipp). For reasons explained later it will be called VGM (Volume Growth Model)
+    \item \textbf{Size homeostasis can be intrinsic to growing cell populations and explained without size sensing or signalling} (published 2012 in the FEBS Journal by T.W.Spiesser, C.Müller, G.Schreiber, M.Krantz and E.Klipp). It will be called BGM (Biomass Growth Model)
+\end{itemize}
+The VGM models the volume changes of a yeast cell over time, as driven by water influx due to pressure differences outside and inside the cell and a resulting  plastic deformation of the cell wall. It accurately reproduces experimental single cell data for unperturbed and perturbed growth (osmotic-shock), ay well as bud growth. Two current limitations of the simulation with bud are the preset lengths of the cell phases, where at first the mother grows alone, then the bud emerges and the coverage of only one cell cycle. Expanding the model to several generations and introducing a more elaborate cell cycle control are possible next steps. \newline
+The BGM relies on a so called self-replicator to simulate growth. An abstract biomass produces cell volume and more biomass. It incorporates a simplified version of the signalling network that controls the cell cycle: so called cyclins are produced with rates dependent on the amount of available biomass. Upon reaching a certain threshold level the cell cycle progresses to the next phase. Similar to the VGM it comprises mainly of two phases: a first without bud growth and a second with bud growth. At the end of the latter the mother cell and the bud separate and the newborn daughter cell starts producing buds herself. As generation after generation is being simulated, this leads to an ever growing number of cells, allowing interesting observations on the population level. As mentioned earlier the BGM uses a self-replicator approach, which is, though conceptually useful, inaccurate when compared to experimental single cell data. Therefor replacing the self-replicator and integrating the VGM, while keeping the biomass dependent cyclin network, could improve the existing model. \newline 
+This is in perfect alignment with the ideas for expanding the VGM. 
+
+%Merging the two models a difficulty arises concerning the biomass. As said already in the BGM it is the biomass producing itself and cell volume. In the VGM biomass plays no role, as the increase in volume is a result of thermodynamic properties of the cell and its surrounding. In this case and increase in biomass has to be the result of and increase in cell volume. Both approaches are in conflict with each other, unless complicated (and mostly hypothetical) feedback between biomass and cell volume is introduced. To avoid this, a new volume dependent biomass is defined.
+
+
+\section{Background}
+Yeast, in particular \textit{Saccharomyces cerevisiae}, is a common model organism. Reason be its easy cultivation, relative small genome and yet distinctive eukaryotic architecture. A feature of widespread interest is the cycle of cell division, worthwhile to study on yeast, as it is conserved throughout eukaryotic organisms up to mammalians. While the sequence of events in that cycle is well understood, their regulation leaves open questions. Two intriguing observations are the rather stable size of newborn cells at cell division and an apparent critical size of daughter cells, before they start budding. Both phenomena point to a kind of size control, to ensure stable cell cycle progression. Various implementations of this size control have been suggested, with no definitive answer yet. 
+
+\subsection{The Cycle Of Cell Division In Yeast}
+
+New cells descent from existing cells by replication of all necessary components and subsequent division. Needless to say, precise coordination is crucial. \newline
+Even though very similar to others the cell cycle in \textit{s.cerevisiae} has some particularities, namely the formation of a bud and a following asynchronous division, resulting in a big mother cell and a smaller daughter cell,  as opposed to the more common equal division with two indistinguishable daughter cells. 
+It is divided in interphase (I) and mitotic phase (M), where in the former, much longer phase all growth related processes take place and in the latter the actual division happens. The interphase is again subdivided into a first gap phase between division and DNA-replication (G1) where only the mother cell grows, a synthesis phase (S) where after passing the start signal (START) at the end of G1 DNA-replication and bud formation begin and a second gap phase (G2) where mother and bud continue growing and the duplicated nucleous is transferred to the bud, before division in the mitotic phase.  
+
+%place graphic of cell cycle here
+
+\subsection{Cell Cycle Control}
+The progression from one phase to another is controlled by a vast network of signalling proteins, culminating in the expression of a cascade of genes at each transition. This network foremost consists of two classes of proteins: cyclins and cyclin-dependent-kinase (CDK). A kinase is an enzyme that transfers a phosphate from a high energy molecule, such as ATP, to a substrate, hence drastically changing its biochemical properties (source wikipedia). CDK's need a cyclin to bind to them, in order to be active. Depending on the binding cyclin they target different substrates. 
+\newline
+Another import class of regulatory proteins is called transcription factors (TF). Located in the nucleous they bind to strands of DNA and activate or deactivate genes, by changing its morphology and blocking/exposing binding sites  for polymerases. Once a binding site, called promoter, is prepared, a RNA-polymerase is recruited and starts transcribing the corresponding gene into mRNA, which is translated into polypeptid chains by ribosomes, to then form active proteins. \newline
+The activity of many TFs is regulated by phosphorylation and dephosphorylation. When a cyclin is abundant in sufficient amount and binding to CDKs, cyclin-specific TFs are targeted and the genes of another cyclin are expressed. This chain ends, when the genes for transition to the next cell phase are expressed. \newline
+
+
+
+\end{document}
