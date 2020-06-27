@@ -11,11 +11,11 @@
 The BGM simulates cell populations with independent single cells growing and dividing over several generations. This allows some interesting in silico experiments, regarding the effect of changes of the single cell properties on the resulting population.
 \section{Idea and assumptions}
 The heart of the BGM is the simulation of single cells. As they grow in size they go through a recurring cycle of phases. Most important is the first phase, where the cell simply grows until it is mature enough to grow daugther cells. Once this point is reached for the rest of the cycle the cell itself stops growing and a bud grows instead. Again when the bud is mature enough, it separates from the mother and becomes an independent cell. \newline
-The growth dynamics are modeled using a self-replicator approach. Two kinds of biomass are defined, one called \underline{structual biomass} being directly proportional to the cells' surface and another called \underline{internal biomass}. The internal biomass produces both the structural biomass and itself, resulting in exponential growth. This is dampened by the next assumption. The efficiency of the cells metabolic machinery, in this model the internal biomass, is assumed to be inversely proportional to the cell volume. Another assumption is a proportional relationship between the metabolic efficiency and cell surface, to account for greater capacities to take up nutrients as the cells' surface increases. \newline
-The progress of the cell cycle is regulated by the signalling network described in the introduction. Cyclins are produced at rates depending on the cells' metabolic capacity (just like the biomass) and the availability of their respective mRNA. This mRNA is produced in stochastic bursts, independent of metabolic capacities or cell volume. Although in this thesis and the original publication by T.Spießer only minimal versions of the cyclin network are implemented, one could make the transcription of mRNA dependent on the abundance of cyclins or other regulatory components. This would be the starting point to implement more elaborate schemes of the network. Cyclins themselve do not exhibit catalytic activity, but program free CDKs. The CDKs are assumed to be abundant in sufficient and stable amount and are not explicitly modeled to reduce the number of involved species. The point of phase transition is defined by a threshold amount of cyclin molecules.
+The growth dynamics are modeled using a self-replicator approach. Two kinds of biomass are defined, one called \underline{structual biomass} being directly proportional to the cells' surface and another called \underline{internal biomass}. The internal biomass produces both the structural biomass and itself, resulting in exponential growth. This is dampened by the next assumption. The efficiency of the cells biosynthetic machinery, in this model the internal biomass, is assumed to be inversely proportional to the cell volume. Another assumption is a proportional relationship between the biosynthetic efficiency and cell surface, to account for greater capacities to take up nutrients as the cells' surface increases. \newline
+The progress of the cell cycle is regulated by the signalling network described in the introduction. Cyclins are produced at rates depending on the cells' biosynthetic capacity (just like the biomass) and the availability of their respective mRNA. This mRNA is produced in stochastic bursts, independent of biosynthetic capacities or cell volume. Although in this thesis and the original publication by T.Spießer only minimal versions of the cyclin network are implemented, one could make the transcription of mRNA dependent on the abundance of cyclins or other regulatory components. This would be the starting point to implement more elaborate schemes of the network. Cyclins themselve do not exhibit catalytic activity, but program free CDKs. The CDKs are assumed to be abundant in sufficient and stable amount and are not explicitly modeled to reduce the number of involved species. The point of phase transition is defined by a threshold amount of cyclin molecules, the transition itself as an instantaneous event. 
 
 \section{Equations and parameters}
-In the tables below all species, parameters and equations used in the original BGM are listed.
+In the tables below all species, parameters and equations used in the original BGM are listed. As mentioned before cell surface is defined as proportional to the structural biomass. A spherical cell shape is assumed and total surface and volume result from adding those of the mother and the growing bud.
 \begin{center}
     \begin{tabular}{|l|p{9.7cm}|}
     \hline
@@ -45,7 +45,7 @@ In the tables below all species, parameters and equations used in the original B
     $threshold$ & amount of Cln (G1)/ Clb (G2) needed to trigger phase transition (mol)& 150 & 150 \\ \hline
     \end{tabular}
 \end{center}
-
+\noindent
 \begin{tabular}{|l|}
     \hline
     \textbf{ODE} \\ \hline
@@ -57,7 +57,9 @@ In the tables below all species, parameters and equations used in the original B
     $\frac{d}{dt}B_{Am} = k_{growth}\cdot \left(\frac{k_{Am}}{k_{R}+k{Am}+k_{Ad}}\right)\cdot B_R\cdot \frac{A}{V}$ \\ \hline
     $\frac{d}{dt}B_{Ad} = k_{growth}\cdot \left(\frac{k_{Ad}}{k_{R}+k{Am}+k_{Ad}}\right)\cdot B_R\cdot \frac{A}{V}$ \\ \hline
 \end{tabular}
-
+\newline
+\newline
+\newline
 \begin{tabular}{|l|}
     \hline
     \textbf{Equation} \\ \hline
@@ -65,16 +67,25 @@ In the tables below all species, parameters and equations used in the original B
     $V_{m/d} = A_{m/d}^{\frac{3}{2}}$ \\ \hline
     $A = A_{m} + A_{d}$ \\ \hline
     $V = V_{m} + V_{d}$ \\ \hline
-    \caption{blablablablablabla}
+    
 \end{tabular}
-\newline
-\newline
-\noindent
-As mentioned before cell surface is defined as proportional to the structural biomass. A spherical cell shape is assumed and total surface and volume result from adding those of the mother and the growing bud. 
-
 
 \section{Main results}
+In the following sections main results of the original study by T.Spießer are presented, intended to give an overview of its conclusions and to set stage for a comparison with the modified model.
 
+\subsection{Size homeostasis on the population level}
+An early version of the BGM published in 2012 (T.Spießer et al.) had only one cyclin $Cln$ governing the length of the G1 phase and a fixed S/G2/M phase. Already this even simpler version produced populations with a quickly converging mean cell size. The interesting point here was, that the mean cell size converged, while the individual cells didnt stop growing. Key element here was the assumption of the biosynthetic efficiency being inversely proportional to the cell volume. 
+\subsection{G1 cyclin suffices to reproduce experimental G1 durations}
+This same early version also reproduced experimental findings, that G1 duration would decrease with genealogical age, though while \textit{in vivo} this effect would lesses as cells grow older, the simulated G1 duration kept becoming shorter.
+
+\subsection{Growth rate dependent mean cell size}
+The growth rate of a population can be tuned by the nutrient composition of the growth medium. It can be seen that fast growing populations have higher average cell sizes and shorter G1 phases. At the same time the variability of the size distribution in the population is constant over a wide range of growth rates. The first effect can be reproduced with only a G1cyclin and fixed G2 duration already, the second not. With increasing growth rate the size variability of the simulated population decreased.
+
+\subsection{Introduction of G2 cyclin allows to reproduce growth rate dependent G2 durations and mean cell sizes}
+The experimentally observed dependence of the S/G2/M phase duration on the growth medium/growth rate can be reproduced by introducing a G2 cyclin equivalent to the G1 cyclin. The results above can be reproduced in this version as well.
+
+\subsection{Bud localization of G2 cyclin production reduces variability of cell size and G2 duration}
+While introducing a G2 cyclin with production rates dependent on the whole cells' internal biomass produces correct average G2 durations, it can not reproduce the populations' constant size variability over different growth rates and the very similar G2 duration of mother cells and daughter cells budding for the first time. Only scaling the internal biomass in the  production term of the G2 cyclin with the buds' proportion of the total cell volume, therefor effectively localising it in the bud, resolves this issue.
 
 
 
