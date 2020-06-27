@@ -1,5 +1,9 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\renewcommand{\arraystretch}{1.5}
+
 \title{The biomass growth model}
 \begin{document}
 \maketitle
@@ -8,9 +12,67 @@ The BGM simulates cell populations with independent single cells growing and div
 \section{Idea and assumptions}
 The heart of the BGM is the simulation of single cells. As they grow in size they go through a recurring cycle of phases. Most important is the first phase, where the cell simply grows until it is mature enough to grow daugther cells. Once this point is reached for the rest of the cycle the cell itself stops growing and a bud grows instead. Again when the bud is mature enough, it separates from the mother and becomes an independent cell. \newline
 The growth dynamics are modeled using a self-replicator approach. Two kinds of biomass are defined, one called \underline{structual biomass} being directly proportional to the cells' surface and another called \underline{internal biomass}. The internal biomass produces both the structural biomass and itself, resulting in exponential growth. This is dampened by the next assumption. The efficiency of the cells metabolic machinery, in this model the internal biomass, is assumed to be inversely proportional to the cell volume. Another assumption is a proportional relationship between the metabolic efficiency and cell surface, to account for greater capacities to take up nutrients as the cells' surface increases. \newline
-The progress of the cell cycle is regulated by the signalling network described in the introduction. Cyclins are produced at rates depending on the cells' metabolic capacity (just like the biomass) and the availability of their respective mRNA. This mRNA is produced in stochastic bursts, independent of metabolic capacities or cell volume. Although in this thesis and the original publication by T.Spießer only minimal versions of the cyclin network are implemented, one could make the transcription of mRNA dependent on the abundance of cyclins or other regulatory components. This would be the starting point to implement more elaborate schemes of the network. Cyclins themselve do not exhibit catalytic activity, but program free CDKs. The CDKs are assumed to be abundant in sufficient and stable amount and are not explicitly modeled to reduce the number of involved species. The point of phase transition is defined by a threshold for the amount of cyclin molecules.
+The progress of the cell cycle is regulated by the signalling network described in the introduction. Cyclins are produced at rates depending on the cells' metabolic capacity (just like the biomass) and the availability of their respective mRNA. This mRNA is produced in stochastic bursts, independent of metabolic capacities or cell volume. Although in this thesis and the original publication by T.Spießer only minimal versions of the cyclin network are implemented, one could make the transcription of mRNA dependent on the abundance of cyclins or other regulatory components. This would be the starting point to implement more elaborate schemes of the network. Cyclins themselve do not exhibit catalytic activity, but program free CDKs. The CDKs are assumed to be abundant in sufficient and stable amount and are not explicitly modeled to reduce the number of involved species. The point of phase transition is defined by a threshold amount of cyclin molecules.
 
 \section{Equations and parameters}
+In the tables below all species, parameters and equations used in the original BGM are listed.
+\begin{center}
+    \begin{tabular}{|l|p{9.7cm}|}
+    \hline
+    \textbf{Species} & \textbf{description} \\ \hline
+    $mCLN$ & mRNA of the G1 proxy cyclin $Cln$ \\ \hline
+    $mCLB$ & mRNA of the S/G2 proxy cyclin $Clb$ \\ \hline
+    $Cln$ & proxy cyclin regulating length of the G1-phase \\ \hline
+    $Clb$ & proxy cyclin regulating length of the S/G2-phase \\ \hline
+    $B_{r}$ & internal biomass shared by mother and bud \\ \hline
+    $B_{Am}$ & structural biomass of mother \\ \hline
+    $B_{Ad}$ & structural biomass of bud \\ \hline
+    \end{tabular}
+\end{center}
+
+\begin{center}
+    \begin{tabular}{ | l | p{6cm} | l | l |}
+    \hline
+    \textbf{parameter} & \textbf{specification} & \textbf{G1} & \textbf{S/G2/M} \\ \hline
+    $k_{growth}$ & growth rate (arb.unit) & 0.029 & 0.029 \\ \hline
+    $k_{pCln}$ & production rate Cln ($\text{min}^{-1}\cdot \text{mol}^{-1}$)& 0.589 & 0 \\ \hline
+    $k_{pCln}$ & production rate Cln ($\text{min}^{-1}\cdot \text{mol}^{-1}$)& 0 & 1.606 \\ \hline
+    $k_{R}$ & synthesis coefficient for internal biomass (arb.unit)& 4.089 & 1.04 \\ \hline
+    $k_{Am}$ & synthesis coefficient for structural biomass of mother (arb.unit)& 1 & 0 \\ \hline
+    $k_{Ad}$ & synthesis coefficient for structural biomass of daughter (arb.unit)& 0 & 1 \\ \hline
+    $k_{deg}$ & degradation rate of cyclins and mRNA  ($\text{min}^{-1}$)& 0.1 & 0.1 \\ \hline
+    $P_x$ & probability of mRNA transcription ($\text{min}^{-1}$) & 0.4 & 0.4 \\ \hline
+    $threshold$ & amount of Cln (G1)/ Clb (G2) needed to trigger phase transition (mol)& 150 & 150 \\ \hline
+    \end{tabular}
+\end{center}
+
+\begin{tabular}{|l|}
+    \hline
+    \textbf{ODE} \\ \hline
+    $\frac{d}{dt}mCLN = -k_{deg}\cdot mCLN$ \\ \hline
+    $\frac{d}{dt}mCLB = -k_{deg}\cdot mCLB$ \\ \hline
+    $\frac{d}{dt}Cln = k_{pCln}\cdot mCLN\cdot B_R\cdot \frac{A}{V}-k_{deg}\cdot Cln$ \\ \hline
+    $\frac{d}{dt}Clb = k_{pClb}\cdot mCLB\cdot B_R\cdot \frac{A}{V}-k_{deg}\cdot Clb$ \\ \hline
+    $\frac{d}{dt}B_R = k_{growth}\cdot \left(\frac{k_{R}}{k_{R}+k{Am}+k_{Ad}}\right)\cdot B_R\cdot \frac{A}{V}$ \\ \hline
+    $\frac{d}{dt}B_{Am} = k_{growth}\cdot \left(\frac{k_{Am}}{k_{R}+k{Am}+k_{Ad}}\right)\cdot B_R\cdot \frac{A}{V}$ \\ \hline
+    $\frac{d}{dt}B_{Ad} = k_{growth}\cdot \left(\frac{k_{Ad}}{k_{R}+k{Am}+k_{Ad}}\right)\cdot B_R\cdot \frac{A}{V}$ \\ \hline
+\end{tabular}
+
+\begin{tabular}{|l|}
+    \hline
+    \textbf{Equation} \\ \hline
+    $A_{m/d} = B_{Am/Ad}$ \\ \hline
+    $V_{m/d} = A_{m/d}^{\frac{3}{2}}$ \\ \hline
+    $A = A_{m} + A_{d}$ \\ \hline
+    $V = V_{m} + V_{d}$ \\ \hline
+    \caption{blablablablablabla}
+\end{tabular}
+\newline
+\newline
+\noindent
+As mentioned before cell surface is defined as proportional to the structural biomass. A spherical cell shape is assumed and total surface and volume result from adding those of the mother and the growing bud. 
+
+
 \section{Main results}
 
 
