@@ -1,0 +1,19 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\title{The biomass growth model}
+\begin{document}
+\maketitle
+\noindent
+The BGM simulates cell populations with independent single cells growing and dividing over several generations. This allows some interesting in silico experiments, regarding the effect of changes of the single cell properties on the resulting population.
+\section{Idea and assumptions}
+The heart of the BGM is the simulation of single cells. As they grow in size they go through a recurring cycle of phases. Most important is the first phase, where the cell simply grows until it is mature enough to grow daugther cells. Once this point is reached for the rest of the cycle the cell itself stops growing and a bud grows instead. Again when the bud is mature enough, it separates from the mother and becomes an independent cell. \newline
+The growth dynamics are modeled using a self-replicator approach. Two kinds of biomass are defined, one called \underline{structual biomass} being directly proportional to the cells' surface and another called \underline{internal biomass}. The internal biomass produces both the structural biomass and itself, resulting in exponential growth. This is dampened by the next assumption. The efficiency of the cells metabolic machinery, in this model the internal biomass, is assumed to be inversely proportional to the cell volume. Another assumption is a proportional relationship between the metabolic efficiency and cell surface, to account for greater capacities to take up nutrients as the cells' surface increases. \newline
+The progress of the cell cycle is regulated by the signalling network described in the introduction. Cyclins are produced at rates depending on the cells' metabolic capacity (just like the biomass) and the availability of their respective mRNA. This mRNA is produced in stochastic bursts, independent of metabolic capacities or cell volume. Although in this thesis and the original publication by T.Spießer only minimal versions of the cyclin network are implemented, one could make the transcription of mRNA dependent on the abundance of cyclins or other regulatory components. This would be the starting point to implement more elaborate schemes of the network. Cyclins themselve do not exhibit catalytic activity, but program free CDKs. The CDKs are assumed to be abundant in sufficient and stable amount and are not explicitly modeled to reduce the number of involved species. The point of phase transition is defined by a threshold for the amount of cyclin molecules.
+
+\section{Equations and parameters}
+\section{Main results}
+
+
+
+
+\end{document}
