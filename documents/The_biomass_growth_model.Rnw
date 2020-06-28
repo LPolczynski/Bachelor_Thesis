@@ -51,8 +51,8 @@ In the tables below all species, parameters and equations used in the original B
 \begin{tabular}{|l|}
     \hline
     \textbf{ODE} \\ \hline
-    $\frac{d}{dt}mCLN = -k_{deg}\cdot mCLN$ \\ \hline
-    $\frac{d}{dt}mCLB = -k_{deg}\cdot mCLB$ \\ \hline
+    $\frac{d}{dt}mCLN = f\left(P_x\right) -k_{deg}\cdot mCLN$ \\ \hline
+    $\frac{d}{dt}mCLB = f\left(P_x\right) -k_{deg}\cdot mCLB$ \\ \hline
     $\frac{d}{dt}Cln = k_{pCln}\cdot mCLN\cdot B_R\cdot \frac{A}{V}-k_{deg}\cdot Cln$ \\ \hline
     $\frac{d}{dt}Clb = k_{pClb}\cdot mCLB\cdot B_R\cdot \frac{A}{V}-k_{deg}\cdot Clb$ \\ \hline
     $\frac{d}{dt}B_R = k_{growth}\cdot \left(\frac{k_{R}}{k_{R}+k{Am}+k_{Ad}}\right)\cdot B_R\cdot \frac{A}{V}$ \\ \hline
@@ -61,6 +61,14 @@ In the tables below all species, parameters and equations used in the original B
 \end{tabular}
 \newline
 \newline
+\noindent
+\begin{tabular}{|l|p{5.5cm}|}
+    \hline 
+    $f\left(P_x\right)$ & Function executed in regular time intervals (implement as once per simulated minute), adds one molecule of mRNA with probability $P_x$.\\ \hline
+\end{tabular}
+\newline
+\newline
+\
 \newline
 \begin{tabular}{|l|}
     \hline
