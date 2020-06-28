@@ -68,7 +68,7 @@ In the tables below all species, parameters and equations used in the original B
 \end{tabular}
 \newline
 \newline
-\
+
 \newline
 \begin{tabular}{|l|}
     \hline

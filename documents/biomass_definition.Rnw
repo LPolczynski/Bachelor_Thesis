@@ -1,6 +1,4 @@
-\documentclass{article}
-
-\documentclass{article}
+\documentclass{report}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 
