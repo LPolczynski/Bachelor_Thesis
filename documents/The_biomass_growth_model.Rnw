@@ -1,6 +1,8 @@
-\documentclass{article}
+\documentclass{report}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
 
 \renewcommand{\arraystretch}{1.5}
 
@@ -69,23 +71,42 @@ In the tables below all species, parameters and equations used in the original B
     $V = V_{m} + V_{d}$ \\ \hline
     
 \end{tabular}
+\newpage
 
 \section{Main results}
-In the following sections main results of the original study by T.Spießer are presented, intended to give an overview of its conclusions and to set stage for a comparison with the modified model.
+In the following sections main results of the original study by T.Spießer are presented, intended to give an overview of its conclusions and to set stage for a later comparison with the modified model.
 
-\subsection{Size homeostasis on the population level}
-An early version of the BGM published in 2012 (T.Spießer et al.) had only one cyclin $Cln$ governing the length of the G1 phase and a fixed S/G2/M phase. Already this even simpler version produced populations with a quickly converging mean cell size. The interesting point here was, that the mean cell size converged, while the individual cells didnt stop growing. Key element here was the assumption of the biosynthetic efficiency being inversely proportional to the cell volume. 
 \subsection{G1 cyclin suffices to reproduce experimental G1 durations}
-This same early version also reproduced experimental findings, that G1 duration would decrease with genealogical age, though while \textit{in vivo} this effect would lesses as cells grow older, the simulated G1 duration kept becoming shorter.
+This same early version also reproduced experimental findings, that G1 duration would decrease with genealogical age. While \textit{in vivo} this effect would lessen as the cells grow older, the simulated G1 durations kept becoming shorter.
 
-\subsection{Growth rate dependent mean cell size}
-The growth rate of a population can be tuned by the nutrient composition of the growth medium. It can be seen that fast growing populations have higher average cell sizes and shorter G1 phases. At the same time the variability of the size distribution in the population is constant over a wide range of growth rates. The first effect can be reproduced with only a G1cyclin and fixed G2 duration already, the second not. With increasing growth rate the size variability of the simulated population decreased.
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=8cm,keepaspectratio]{graphics/BGM_G1_duration.png}
+    \caption{Figure taken from (cite spießer 2012 here!!!). Average time spend in G1 depending on genealogical age. Comparison of experimental data and a simulated population}
+    \label{fig:BGMG1D}
+    \end{center}
+\end{figure}
 
-\subsection{Introduction of G2 cyclin allows to reproduce growth rate dependent G2 durations and mean cell sizes}
-The experimentally observed dependence of the S/G2/M phase duration on the growth medium/growth rate can be reproduced by introducing a G2 cyclin equivalent to the G1 cyclin. The results above can be reproduced in this version as well.
+\subsection{Size homeostasis on the population level and growth rate dependent mean cell size}
+An early version of the BGM published in 2012 (T.Spießer et al.) had only one cyclin $Cln$ governing the length of the G1 phase and a fixed S/G2/M phase. Already this even simpler version produced populations with a quickly converging mean cell size. The interesting point here was, that the mean cell size converged, while the individual cells didnt stop growing, due to the assumption of the biosynthetic efficiency being inversely proportional to the cell volume. 
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=8cm,keepaspectratio]{graphics/BGM_size_homeostasis.png}
+    \caption{Figure taken from (cite spießer 2012 here!!!). A simulated population with cell volume plotted against simulation time. Population mean and standard deviation, single cell trajectories are represented by thin lines.}
+    \label{fig:BGMsizeH}
+    \end{center}
+\end{figure}
 
-\subsection{Bud localization of G2 cyclin production reduces variability of cell size and G2 duration}
-While introducing a G2 cyclin with production rates dependent on the whole cells' internal biomass produces correct average G2 durations, it can not reproduce the populations' constant size variability over different growth rates and the very similar G2 duration of mother cells and daughter cells budding for the first time. Only scaling the internal biomass in the  production term of the G2 cyclin with the buds' proportion of the total cell volume, therefor effectively localising it in the bud, resolves this issue.
+The growth rate of a population in a laboratory can be tuned adjusting the nutrient composition of the growth medium. It can be seen that fast growing populations have higher average cell sizes and shorter G1 phases. At the same time the variability of the size distribution in the population remains constant over a wide range of growth rates. The first effect can be reproduced with the mentioned G1 cyclin \textit{Cln} and a fixed G2 duration already, the second not. With increasing growth rate the size variability of the simulated population decreased.
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{graphics/BGM_growthrate_Cln.png}
+    \caption{Figure taken from (cite spießer 2012 here!!!). (A) Cell volume vs. time(min) of cultures simulated for different parameter values of  $k_{growth}$, mean cell size and standard deviation plotted. (B) Volume distribution at the end of simulations in (A). For high values of $k_{growth}$ average cell size increases and becomes less variable.}
+    \label{fig:BGMmuCln}
+\end{figure}
+
+\subsection{Growth rate dependent G2 durations and reduced size variability}
+The experimentally observed dependence of the S/G2/M phase duration on the growth medium/growth rate can be reproduced by introducing a G2 cyclin \textit{Clb} equivalent to \textit{Cln}. 
+Still the populations' constant size variability over different growth rates can not be reproduced . The model also fails to predict the very similar G2 duration of mother and daughter cells. Only scaling the internal biomass in the  production term of the G2 cyclin \textit{Clb} with the buds' proportion of the total cell volume, therefor effectively localizing it in the bud, resolves this issue. This version of the model is shown in the equations and parameters section.
 
 
 
