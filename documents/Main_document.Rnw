@@ -1,0 +1,49 @@
+\documentclass{report}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{float}
+
+\renewcommand{\arraystretch}{1.5}
+
+\title{
+{Thesis Title}\\
+{\large Humboldt Universität Berlin}}
+%{\includegraphics{university.jpg}}
+
+\author{Louis Pascal Polczynski}
+\date{Day Month Year}
+
+\begin{document}
+\maketitle
+
+%\chapter*{Abstract}
+%Abstract goes here
+
+%\chapter*{Dedication}
+%To mum and dad
+
+%\chapter*{Declaration}
+%I declare that..
+
+%\chapter*{Acknowledgements}
+%I want to thank...
+
+\tableofcontents
+
+\chapter{Introduction}
+\input{introduction.Rnw}
+
+\chapter{The biomass growth model}
+\input{The_biomass_growth_model.Rnw}
+
+\chapter{The volume growth model}
+\input{The_volume_growth_model.Rnw}
+
+\chapter{The merged model}
+\input{The_merged_model.Rnw}
+
+%\appendix
+%\chapter{Appendix Title}
+
+\end{document}

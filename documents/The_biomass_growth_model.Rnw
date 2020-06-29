@@ -1,19 +1,19 @@
-\documentclass{report}
-\usepackage[utf8]{inputenc}
-\usepackage{amsmath}
-\usepackage{graphicx}
-\usepackage{float}
+%\documentclass{report}
+%\usepackage[utf8]{inputenc}
+%\usepackage{amsmath}
+%\usepackage{graphicx}
+%\usepackage{float}
 
-\renewcommand{\arraystretch}{1.5}
+%\renewcommand{\arraystretch}{1.5}
 
-\title{The biomass growth model}
-\begin{document}
-\maketitle
-\noindent
+%\title{The biomass growth model}
+%\begin{document}
+%\maketitle
+%\noindent
 The BGM simulates cell populations with independent single cells growing and dividing over several generations. This allows some interesting in silico experiments, regarding the effect of changes of the single cell properties on the resulting population.
 \section{Idea and assumptions}
 The heart of the BGM is the simulation of single cells. As they grow in size they go through a recurring cycle of phases. Most important is the first phase, where the cell simply grows until it is mature enough to grow daugther cells. Once this point is reached for the rest of the cycle the cell itself stops growing and a bud grows instead. Again when the bud is mature enough, it separates from the mother and becomes an independent cell. \newline
-The growth dynamics are modeled using a self-replicator approach. Two kinds of biomass are defined, one called \underline{structual biomass} being directly proportional to the cells' surface and another called \underline{internal biomass}. The internal biomass produces both the structural biomass and itself, resulting in exponential growth. This is dampened by the next assumption. The efficiency of the cells biosynthetic machinery, in this model the internal biomass, is assumed to be inversely proportional to the cell volume. Another assumption is a proportional relationship between the biosynthetic efficiency and cell surface, to account for greater capacities to take up nutrients as the cells' surface increases. \newline
+The growth dynamics are modeled using a self-replicator approach. Two kinds of biomass are defined, one called \textit{structual biomass} being directly proportional to the cells' surface and another called \textit{internal biomass}. The internal biomass produces both the structural biomass and itself, resulting in exponential growth. This is dampened by the next assumption. The efficiency of the cells biosynthetic machinery, in this model the internal biomass, is assumed to be inversely proportional to the cell volume. Another assumption is a proportional relationship between the biosynthetic efficiency and cell surface, to account for greater capacities to take up nutrients as the cells' surface increases. \newline
 The progress of the cell cycle is regulated by the signalling network described in the introduction. Cyclins are produced at rates depending on the cells' biosynthetic capacity (just like the biomass) and the availability of their respective mRNA. This mRNA is produced in stochastic bursts, independent of biosynthetic capacities or cell volume. Although in this thesis and the original publication by T.Spießer only minimal versions of the cyclin network are implemented, one could make the transcription of mRNA dependent on the abundance of cyclins or other regulatory components. This would be the starting point to implement more elaborate schemes of the network. Cyclins themselve do not exhibit catalytic activity, but program free CDKs. The CDKs are assumed to be abundant in sufficient and stable amount and are not explicitly modeled to reduce the number of involved species. The point of phase transition is defined by a threshold amount of cyclin molecules, the transition itself as an instantaneous event. 
 
 \section{Equations and parameters}
@@ -59,17 +59,7 @@ In the tables below all species, parameters and equations used in the original B
     $\frac{d}{dt}B_{Am} = k_{growth}\cdot \left(\frac{k_{Am}}{k_{R}+k{Am}+k_{Ad}}\right)\cdot B_R\cdot \frac{A}{V}$ \\ \hline
     $\frac{d}{dt}B_{Ad} = k_{growth}\cdot \left(\frac{k_{Ad}}{k_{R}+k{Am}+k_{Ad}}\right)\cdot B_R\cdot \frac{A}{V}$ \\ \hline
 \end{tabular}
-\newline
-\newline
-\noindent
-\begin{tabular}{|l|p{5.5cm}|}
-    \hline 
-    $f\left(P_x\right)$ & Function executed in regular time intervals (implement as once per simulated minute), adds one molecule of mRNA with probability $P_x$.\\ \hline
-\end{tabular}
-\newline
-\newline
-
-\newline
+\quad
 \begin{tabular}{|l|}
     \hline
     \textbf{Equation} \\ \hline
@@ -79,7 +69,15 @@ In the tables below all species, parameters and equations used in the original B
     $V = V_{m} + V_{d}$ \\ \hline
     
 \end{tabular}
-\newpage
+\newline
+\newline
+\noindent
+\begin{tabular}{|l|p{5.5cm}|}
+    \hline 
+    $f\left(P_x\right)$ & Function executed in regular time intervals (implement as once per simulated minute), adds one molecule of mRNA with probability $P_x$.\\ \hline
+\end{tabular}
+
+%\newpage
 
 \section{Main results}
 In the following sections main results of the original study by T.Spießer are presented, intended to give an overview of its conclusions and to set stage for a later comparison with the modified model.
@@ -118,4 +116,4 @@ Still the populations' constant size variability over different growth rates can
 
 
 
-\end{document}
+%\end{document}

@@ -1,13 +1,13 @@
-\documentclass{report}
-\usepackage[utf8]{inputenc}
-\usepackage{amsmath}
-\usepackage{graphicx}
-\usepackage{float}
+%\documentclass{report}
+%\usepackage[utf8]{inputenc}
+%\usepackage{amsmath}
+%\usepackage{graphicx}
+%\usepackage{float}
 
-\renewcommand{\arraystretch}{1.5}
+%\renewcommand{\arraystretch}{1.5}
 
-\title{The volume growth model}
-\begin{document}
+%\title{The volume growth model}
+%\begin{document}
 
 \section{Idea and Assumptions}
 The VGM links three basic quantities to describe the growth trajectory of single cells: volume, osmotic and tugor pressure. Based on a formalism established by Kedem-Katchalsky water flux across the cell membrane is proportional to the difference between pressures driving water out of the cell (outer osmotic pressure and tugor pressure) and pressures driving water into the cell (inner osmotic pressure). Using Van t'Hoff's law inner and outer osmotic pressure are proportional to inner and outer concentration of osmotically active molecules (osmolytes). The concentration of osmolytes outside of the cell is set constant. The concentration of osmolytes insde the cell increases with an uptake rate proportional to the cell's surface and decreases due to dilution of the growing cell and osmolyte consumption proportional to the cell's volume. \newline
@@ -70,11 +70,11 @@ The tables below contain all species, parameters and equations used in the VGM.
 \begin{tabular}{|l|}
     \hline 
     $f\left(\Pi_t\right) = max\left(\Pi_{tc} - \Pi_t, 0 \right)$ \\ \hline
-    $A = \left(4\pi\right)^\frac{1}{3}} \cdot \left(3 V\right)^\frac{2}{3}$ \\ \hline
+    $A = \left(4\pi\right)^\frac{1}{3} \cdot \left(3 V\right)^\frac{2}{3}$ \\ \hline
     $r = \left(\frac{3}{4\pi} V\right)^\frac{1}{3}$ \\ \hline
 \end{tabular}
 \newline
 \newline
 
 \section{Main results}
-\end{document}
+%\end{document}

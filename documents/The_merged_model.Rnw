@@ -1,0 +1,42 @@
+\section{Biomass}
+Merging the two models difficulties arise concerning the biomass. In the BGM it is the biomass producing itself and cell volume in an autocatalytic process. In the VGM cell growth is a result of thermodynamic properties of the cell and its surrounding, independent of biomass . Both approaches are in conflict with each other, unless complicated (and mostly hypothetical) feedback between biomass and cell volume is introduced. To avoid this, a new volume dependent biomass is needed.
+
+
+
+\section{Osmolyte consumption}
+An important aspect of the VGM is the balance of osmolytes. Their uptake is proportional to the surface and the consumption is proportional to the volume. The ratio $\frac{k_{up}}{k_{cons}}$ defines the final cell size. The consumption of osmolytes being proportional to cell volume cannot really account for the costs of cell growth. When the cell stops growing, the corresponding costs should go to zero. Instead they become constant. It is therefor better understood as a maintenance cost: proteins degrade and have to be reproduced, signalling and cellular transport need energy etc. A short calculation shows, that maintenance costs due to reproduction of degraded biomass can indeed be approximated as proportional to cell volume. Assuming a first order degradation kinetic $\dot B_{deg} = k_{deg}\cdot B$ and constant biomass to volume ratio $B = k_D\cdot V$ the osmolyte consumption $\dot n_{main}$ reads
+\begin{align*}
+    \dot n_{main} &= k_{cost} \cdot \dot B_{deg}\\
+                  &= k_{cost} \cdot k_{deg}\cdot k_D\cdot V
+\end{align*}
+$k_{deg}$ is the degradation rate constant, $k_{cost}$ the number of osmolyte molecules consumed per unit of produced biomass. The constants $k_{cost}$, $k_{deg}$ and $k_D$ can be summed up in one as $k_{main}$. This is equivalent to the $k_{cons}$ in the VGM.\newline
+To quantify the cost of biomass production a new term is needed. As stated before biomass and volume are assumed to be proportional. The change in biomass as a function of the volume then is
+\begin{equation}
+    \dot B = k_D \cdot \dot V
+    \label{eq:t_deriv_B}
+\end{equation}
+The cost of this amounts to
+\begin{align*}
+    \dot n_{cost} &= k_{cost} \cdot \dot B\\
+                  &= k_{cost} \cdot k_D \cdot \dot V
+\end{align*}
+The complete equation for the osmolyte balance is
+\begin{align}
+    \dot c &= \frac{\dot n_{up}}{V} - \frac{\dot n_{main}}{V} - \frac{\dot n_{cost}}{V} - \dot c_{dilution}\\
+           &= k_{up}\cdot \frac{A}{V} - k_{main} - \left(k_{cost}\cdot k_D - c\right)\cdot \frac{\dot V}{V}\\
+\end{align}
+The new cost term is very similar to the dilution term. It does not change the fundamental behaviour of the system, as it only slows down the cell's growth. The final radius of the cell is untouched by it and remains $r_{final} = 3\frac{k_{up}}{k_{main}}$. Nonetheless it clarifies osmolyte consumption and opens up the possibility of more elaborate implementations of growth costs.   
+
+\section{Cyclin network}
+
+\subsection{Nutrient supply}
+The uptake of nutrients is proportional to the cell's surface. In the VGM this is expressed by the term for osmolyte uptake in the osmolyte equation. Given the fact that nutrients make up most of the osmolytically active molecules, it is reasonable to equate both. The BGM accounts for this proportionality by scaling the production terms of cyclin and biomass with the cell surface. The argument being that biosynthetic efficiency increases with nutrient availability. While this is very much true, nutrient availability is not primarily measured in cell surface but nutrient concentration. There is no experimental evidence for a proportional relationship between cell surface and nutrient concentration. In the merged model the concentration of osmolytes/nutrients is a direct output. Consequently the surface scaling of the biosynthetic capacity has to be removed. It could be replaced by the osmolyte concentration, either as plain proportionality or in the form of a Michaelis-Menten kinetic. Since it is almost constant at any time of the simulation it is left out. 
+
+\subsection{Bud localization of Clb production}
+Regulating the duration of the G2 phase via the bud localization of critical G2 cyclins was an important proposition of the BGM. It was implemented using only a fraction of the \textit{internal biomass}, proportional to the bud's share of the total cell volume, in the synthesis of this cyclin ($Clb$). Only when the bud was big enough the cyclin threshold for a phase transition was met and division initialized. \newline
+The merged model no longer offers a shared biomass. Therefor localizing $Clb$ reduces to including only the bud's \textit{metabolic biomass} in its production.
+
+
+\section{Coupling of mother and bud}
+As explained earlier the coupling of mother and bud via exchange terms for water and osmolytes turns out to be rather problematic. For a start it was omitted. The dampened growth of the mother due to resource drain towards the bud was imitated by stopping the growth of the mother during S/G2/M phase, as was done already in the BGM. Nonetheless the model code offers a working option to enable water and osmolyte transfer. The production of cyclins is still coupled by simply adding up the \textit{metabolic biomass} of mother and bud, unless there are explicitly decoupled as for \textit{Clb}.
+
