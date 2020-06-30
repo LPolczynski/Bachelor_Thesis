@@ -78,11 +78,11 @@ The tables below contain all species, parameters and equations used in the VGM.
 
 \section{Main results}
 
-\subsection{Single cell growth trajectories have rather sigmoidal form}
+\subsection{Single cell growth trajectories have rather sigmoidal shape}
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=6cm,keepaspectratio]{graphics/VGM_sigm_curve.png}
+        \includegraphics[width=8cm,keepaspectratio]{graphics/VGM_sigm_curve.png}
         \caption{Figure taken from (cite Goldenbogen here!!). Plot total cell volume over time. The predicted single cell growth trajectory is neither an exponential function nor a linear function, but rather sigmoidal. Right: the ration between $k_{uptake}$ and $k_{consume}$ determines the maximum cell volume. If this ratio is kept constant but $k_{uptake}$ and $k_{consume}$ increased or decreased only the growth rate changes.}
         \label{fig:VGM_sigm_curves}
     \end{center}
@@ -93,11 +93,19 @@ The tables below contain all species, parameters and equations used in the VGM.
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=8cm,keepaspectratio]{graphics/VGM_growth_curves.png}
+        \includegraphics[width=10cm,keepaspectratio]{graphics/VGM_growth_curves.png}
         \caption{Figure taken from (cite Goldenbogen here!!). Plot total cell volume over time. The ratio between $k_{uptake}$ and $k_{consume}$ determines the maximum cell volume. If this ratio is kept constant but $k_{uptake}$ and $k_{consume}$ increased or decreased only the growth rate changes.}
         \label{fig:VGM_growth_curves}
     \end{center}
 \end{figure}
 
+\subsection{Cell wall extensibility of bud has to be orders of magnitude greater than mother in order to grow}
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=12cm,keepaspectratio]{graphics/VGM_extensibility.png}
+    \caption{Figure take from (cite Goldenbogen here!!). (Left) Scheme of mother/bud coupling. (Right) Growth trajectories of mother and bud for different ratios of their cell wall extensibilities.}
+    \label{fig:VGM_extensibility}
+    \end{center}
+\end{figure}
 
 %\end{document}

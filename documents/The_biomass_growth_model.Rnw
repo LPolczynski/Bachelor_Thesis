@@ -113,6 +113,21 @@ The growth rate of a population in a laboratory can be tuned adjusting the nutri
 \subsection{Growth rate dependent G2 durations and reduced size variability}
 The experimentally observed dependence of the S/G2/M phase duration on the growth medium/growth rate can be reproduced by introducing a G2 cyclin \textit{Clb} equivalent to \textit{Cln}. 
 Still the populations' constant size variability over different growth rates can not be reproduced . The model also fails to predict the very similar G2 duration of mother and daughter cells. Only scaling the internal biomass in the  production term of the G2 cyclin \textit{Clb} with the buds' proportion of the total cell volume, therefor effectively localizing it in the bud, resolves this issue. This version of the model is shown in the equations and parameters section.
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=8cm,keepaspectratio]{graphics/BGM_G2_durations.png}
+    \caption{Figure taken from (cite spießer 2012 here!!!). Plot average G1 vs S/G2/M duration of mother cells (triangles), daughter cells (circles) and whole population (squares) in 4 different growth media/rates. Above results of simulation without localization of $Clb$ (Model-1), beneath results of simulation with $Clb$ localization (Model-2. In both models the G1 durations of daughters cells is much longer than that of mother cells. Only the second model shows a similar G2 duration, as is observed in expirements.}
+    \label{fig:BGM_G2_dur}
+    \end{center}
+\end{figure}
+
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=8cm,keepaspectratio]{graphics/BGM_G2_size_variability.png}
+    \caption{Figure taken from (cite spießer 2012 here!!!). Four 2D-plots distribution of cell volume for four growth media/rates. Simulation with bud localized $Clb$ (Model-2). While the mean cell volume of the population increases with higher growth rates (from EtOH up to GLC), the size distribution remains rather constant.}
+    \label{fig:BGM_G2_sizevar}
+    \end{center}
+\end{figure}
 
 
 
