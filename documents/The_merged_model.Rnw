@@ -1,29 +1,157 @@
 \section{Biomass}
-Merging the two models difficulties arise concerning the biomass. In the BGM it is the biomass producing itself and cell volume in an autocatalytic process. In the VGM cell growth is a result of thermodynamic properties of the cell and its surrounding, independent of biomass . Both approaches are in conflict with each other, unless complicated (and mostly hypothetical) feedback between biomass and cell volume is introduced. To avoid this, a new volume dependent biomass is needed.
+Merging the two models difficulties arise concerning the biomass. In the BGM it is the biomass producing itself and cell volume. In the VGM cell growth is independent of biomass. Both approaches are conflicting, unless complicated (and mostly hypothetical) feedback between biomass and cell volume is introduced. A new volume dependent biomass is needed. \newline
+Experimental data suggest that the bouyant density of yeast cells varies by around 1\% throughout the cell cycle (Baldwin,Kubitschek 1984). Still cell density is not really dependent on cell volume and approximately constant. This relationship allows the definition of a volume dependent biomass.
+\begin{equation}
+    \rho_{cell} = \frac{B}{V}
+    \label{eq:Def_B_to_V}
+\end{equation}
+Where $B$ is the weight of the cell's biomass, $V$ the cell volume and $\rho_{cell}$ their constant ratio. The volume $V_b$ directly taken up by $B$ depends on its own density $\rho_b$.
+\begin{equation}
+    \rho_{b} = \frac{B}{V_b}
+    \label{eq:Def_B_to_Vb}
+\end{equation}
+Since the cell has to be at least as big as the volume taken up by its biomass, it is clear that $\rho_b \ge \rho_{cell}$. 
+As in the VGM the total cell volume $V$ is split in osmotically active and inactive volume $V_{os}$ and $V_b$.
+\begin{equation}
+    V = V_{os} + V_b
+    \label{eq:Def_V}
+\end{equation}
+Three types of biomass are defined. 
+\begin{itemize}
+    \item 'structural' biomass $B_A$
+    \item 'metabolic' biomass $B_R$
+    \item 'basic' biomass $B_N$
+\end{itemize}
+with a total biomass 
+\begin{equation}
+    B = B_N + B_A + B_R
+    \label{eq:Def_B}
+\end{equation}
+The \textit{structural biomass} and the \textit{metabolic biomass} (formerly called \textit{internal biomass}) are directly imported from the BGM. The \textit{basic biomass} is new. It corresponds to the nucleous and only grows in buds. \newline
+The VGM differentiates between reversible elastic expansion and irreversible plastic expansion of the cell wall. Only the latter is equated with 'real' growth and the incorporation of new biomass. It is monitored through the reference volume $V_{ref}$. The \textit{structural biomass} is therefor proportional to the relaxed cell surface $A_{ref}$:
+\begin{equation}
+    \sigma_A = \frac{B_A}{A_{ref}}
+    \label{eq:Def_BA}
+\end{equation}
+Assuming all biomass has the same density, the parameter $\sigma_A$ can be estimated from the surface $A_{ref}$ and thickness $d$ of the cell wall:
+\begin{align*}
+    B_A &= \rho_{b} \cdot V_{wall} \\
+    &= \rho_{b} \cdot d \cdot A_{ref}
+\end{align*}
+and consequently 
+\begin{equation}
+    \sigma_A = \rho_{b}*d
+    \label{eq:Def_sigmaA}
+\end{equation}
+Next a function for the \textit{metabolic biomass} is derived.
+Insert Eq. \ref{eq:Def_V} in Eq. \ref{eq:Def_B_to_V} 
+\begin{equation}
+    B = \rho_{cell}\left(V_{os} + V_b\right)
+    \label{eq:B_Vos/b}
+\end{equation}
+with Eq. \ref{eq:Def_B_to_Vb}
+\begin{equation*}
+    B = \rho_{cell} V_{os} + \frac{\rho_{cell}}{\rho_{b}}\cdot B
+\end{equation*}
+Rearranging $B$ on the left side of the equation yields
+\begin{equation}
+    B = \frac{\rho_{cell}\cdot \rho_{b}}{\rho_{b} - \rho_{cell}}\cdot V_{os}
+    \label{eq:B_Vos}
+\end{equation}
+This equation for the total biomass as a function of the osmotically active volume is now inserted in Eq. \ref{eq:Def_B} and rearranged for $B_R$ and its time derivative
+\begin{align}
+    B_R &= \frac{\rho_{cell}\cdot \rho_{b}}{\rho_{b} - \rho_{cell}}\cdot V_{os} - B_A - B_N
+    \label{Def_BR}\\
+    \dot B_R &= \frac{\rho_{cell}\cdot \rho_{b}}{\rho_{b} - \rho_{cell}}\cdot\dot  V_{os} - \dot B_A - \dot B_N
+    \label{eq:Def_der_BR}
+\end{align}
+
+\noindent
+Next definitions of the cell volume $V$ and the cell radius $r$ as a function of $V_{os}$ are derived.\newline
+Together Eq. \ref{eq:B_Vos/b} and \ref{eq:B_Vos} yield the osmotically inactive volume $V_b$ as a funciton of $V_{os}$:
+
+\begin{equation}
+    V_b = V_{os}\cdot \frac{\rho_{cell}}{\rho_{b}-\rho_{cell}}
+    \label{Def_Vb_of_Vos}
+\end{equation}
+\noindent
+According to Eq . \ref{eq:Def_V} the total cell volume now reads as
+\begin{equation}
+    V = \frac{\rho_{b}}{\rho_{b}-\rho_{cell}}\cdot V_{os}
+    \label{eq:Def_V_of_Vos}
+\end{equation}
+If a spherical cell is assumed, the cell radius $r$ can be written as
+\begin{equation}
+    r = \left(\frac{3}{4\cdot \pi}\cdot\frac{\rho_{b}}{\rho_{b}-\rho_{cell}}\cdot V_{os}\right)^\frac{1}{3}
+    \label{eq:Def_r}
+\end{equation}
+\begin{equation}
+    \dot r = \frac{1}{3} \left(\frac{3}{4\cdot \pi}\cdot\frac{\rho_{b}}{\rho_{b}-\rho_{cell}}\right)^\frac{1}{3} \frac{\dot V_{os}}{V_{os}^{\frac{2}{3}}} 
+    \label{eq:Def_r_deriv}
+\end{equation}
+
+\subsection{Upper Bound On The Increase Of Basic Biomass}
+During bud growth the \textit{basic biomass} grows.
+\begin{equation*}
+    \dot B_N > 0
+\end{equation*}
+By definition the amount of biomass in a cell can not be negative. To prevent this to occur during bud growth an upper limit for $\dot B_N$ has to be formulated, such that $\dot B_R$ does not become negative. Using the definition of $\dot B_R$ (Eq. \ref{eq:Def_der_BR}) it holds that
+\begin{equation}
+    \dot B_N \leq \frac{\rho_{cell}\cdot \rho_{b}}{\rho_{b}-\rho_{cell}}\cdot \dot V_{os} - \dot B_A 
+    \label{eq:up_lim_dBN}
+\end{equation}
+This inequality  can be used to define an adaptive production of basic biomass. Be $k_N$ in $[0,1]$, setting the ratio of metabolic and basic biomass production and 
+\begin{equation*}
+    \Delta_{\dot B}:=\frac{\rho_{cell}\cdot \rho_{b}}{\rho_{b}-\rho_{cell}}\cdot \dot V_{os} - \dot B_A
+\end{equation*}
+Then an adaptive $\dot B_N$ can be defined as
+\begin{equation}
+    \dot B_N = k_N\cdot \Delta_{\dot B}
+    \label{eq:Def_dBN}
+\end{equation}
+$\dot B_R$ is therefor effectively 
+\begin{equation}
+    \dot B_R = \left(1-k_N\right)\cdot \Delta_{\dot B}
+    \label{eq:Def_dBR}
+\end{equation}
 
 
+
+%\subsection{The Bud}
+%In the BGM the bud is initialized at the end of the G1 phase with a volume zero. Both mother and bud share the same internal biomass and cyclins, only differing in their structural biomass $B_{Am}$ and $B_{Ad}$. At the end of the M phase they separate and cell components are distributed according to the ratio of their volume.\newline
+%In the VGM the bud is initialized as a new cell. Mother and bud are only coupled by diffusion terms for osmolytes and water. The VGM does not work for a cell volume zero, so the bud has to start with a small volume already. This generates a small bit of cell volume, every time a bud is initialized.\newline
+%The approach of a fixed cell density and volume dependent biomass has similar not necessarily biological but rather model inherent limitations.
+
+%\subsubsection{Lower Bound On The Osmotic Volume}
+%As is clear from Eq. \ref{eq:Def_BR} there exists a lower limit for V_{os}.
+%None of the three types of biomass can be negative. Considering an empty cell without \textit{metabolic biomass} or \textit{basic biomass} Eq. \ref{eq:Def_BR} reads
+%\begin{equation}
+ %   B_A = \frac{\rho_{cell}\cdot \rho_{b}}{\rho_{b} - \rho_{cell}}\cdot V_{os}
+ %   \label{eq:lw_lim_Vos}
+%\end{equation}
 
 \section{Osmolyte consumption}
-An important aspect of the VGM is the balance of osmolytes. Their uptake is proportional to the surface and the consumption is proportional to the volume. The ratio $\frac{k_{up}}{k_{cons}}$ defines the final cell size. The consumption of osmolytes being proportional to cell volume cannot really account for the costs of cell growth. When the cell stops growing, the corresponding costs should go to zero. Instead they become constant. It is therefor better understood as a maintenance cost: proteins degrade and have to be reproduced, signalling and cellular transport need energy etc. A short calculation shows, that maintenance costs due to reproduction of degraded biomass can indeed be approximated as proportional to cell volume. Assuming a first order degradation kinetic $\dot B_{deg} = k_{deg}\cdot B$ and constant biomass to volume ratio $B = k_D\cdot V$ the osmolyte consumption $\dot n_{main}$ reads
+An important aspect of the VGM is the balance of osmolytes. Their uptake is proportional to the surface and the consumption is proportional to the volume. The ratio $\frac{k_{up}}{k_{cons}}$ defines the final cell size. The consumption of osmolytes being proportional to cell volume cannot really account for the costs of cell growth. When the cell stops growing, the corresponding costs should go to zero. Instead they become constant. It is therefor better understood as a maintenance cost: proteins degrade and have to be reproduced, signalling and cellular transport need energy etc. A short calculation shows, that maintenance costs due to reproduction of degraded biomass can indeed be approximated as proportional to cell volume. Assuming a first order degradation kinetic $\dot B_{deg} = k_{deg}\cdot B$ and constant biomass to volume ratio $B = \rho_{cell}\cdot V$ the osmolyte consumption $\dot n_{main}$ reads
 \begin{align*}
     \dot n_{main} &= k_{cost} \cdot \dot B_{deg}\\
-                  &= k_{cost} \cdot k_{deg}\cdot k_D\cdot V
+                  &= k_{cost} \cdot k_{deg}\cdot \rho_{cell}\cdot V
 \end{align*}
-$k_{deg}$ is the degradation rate constant, $k_{cost}$ the number of osmolyte molecules consumed per unit of produced biomass. The constants $k_{cost}$, $k_{deg}$ and $k_D$ can be summed up in one as $k_{main}$. This is equivalent to the $k_{cons}$ in the VGM.\newline
+$k_{deg}$ is the degradation rate constant, $k_{cost}$ the number of osmolyte molecules consumed per unit of produced biomass. The constants $k_{cost}$, $k_{deg}$ and $\rho_{cell}$ can be summed up in one as $k_{main}$. This is equivalent to the $k_{cons}$ in the VGM.\newline
 To quantify the cost of biomass production a new term is needed. As stated before biomass and volume are assumed to be proportional. The change in biomass as a function of the volume then is
 \begin{equation}
-    \dot B = k_D \cdot \dot V
+    \dot B = \rho_{cell} \cdot \dot V
     \label{eq:t_deriv_B}
 \end{equation}
 The cost of this amounts to
 \begin{align*}
     \dot n_{cost} &= k_{cost} \cdot \dot B\\
-                  &= k_{cost} \cdot k_D \cdot \dot V
+                  &= k_{cost} \cdot \rho_{cell} \cdot \dot V
 \end{align*}
 The complete equation for the osmolyte balance is
 \begin{align}
     \dot c &= \frac{\dot n_{up}}{V} - \frac{\dot n_{main}}{V} - \frac{\dot n_{cost}}{V} - \dot c_{dilution}\\
-           &= k_{up}\cdot \frac{A}{V} - k_{main} - \left(k_{cost}\cdot k_D - c\right)\cdot \frac{\dot V}{V}\\
+        &= k_{up}\cdot \frac{A}{V} - k_{main} - k_{cost}\cdot \rho_{cell}\cdot \frac{\dot V}{V} - c\cdot \frac{\dot V}{V}\\
+           &= k_{up}\cdot \frac{A}{V} - k_{main} - \left(k_{cost}\cdot \rho_{cell} - c\right)\cdot \frac{\dot V}{V}\\
 \end{align}
 The new cost term is very similar to the dilution term. It does not change the fundamental behaviour of the system, as it only slows down the cell's growth. The final radius of the cell is untouched by it and remains $r_{final} = 3\frac{k_{up}}{k_{main}}$. Nonetheless it clarifies osmolyte consumption and opens up the possibility of more elaborate implementations of growth costs.   
 
