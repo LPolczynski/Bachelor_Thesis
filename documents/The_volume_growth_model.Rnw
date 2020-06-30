@@ -60,9 +60,9 @@ The tables below contain all species, parameters and equations used in the VGM.
     $\frac{d}{dt} V_{os} = - L_p\cdot A \cdot \left(\Pi_t + \Pi_e - \Pi_i\right)$ \\ \hline
     $\frac{d}{dt} V_{b} = 0.2 \cdot V_{ref}$ \\ \hline
     $\frac{d}{dt} V = \dot{V_{os}} + \dot{V_{b}}$ \\ \hline
-    $\frac{d}{dt} V_{ref} = \frac{\Phi\cdot r}{d\cdot f\left(\Pi_t\right)}\cdot V_{ref}$\\ \hline
-    $\frac{d}{dt} \Pi_t = \frac{E\cdot 2 d}{r}\cdot \frac{\dot{V}}{V_{ref}} - E\cdot\Phi\cdot f\left(\Pi_t\right) - \frac{\Pi_t}{V}\cdot \dot{V}$\\ \hline
-    $\frac{d}{dt} c_i = k_{uptake}\cdot \frac{A}{V} - k_{cons} - \frac{c_i}{V}\cdot \dot{V}$\\ \hline
+    $\frac{d}{dt} V_{ref} = \frac{\Phi\cdot r}{2\cdot d}\cdot f\left(\Pi_t\right)\cdot V_{ref}$\\ \hline
+    $\frac{d}{dt} \Pi_t = \frac{E\cdot 2 d}{r}\cdot \frac{\dot{V}}{V_{ref}} - E\cdot\Phi\cdot f\left(\Pi_t\right) - \Pi_t\cdot\frac{\dot{V}}{V} $\\ \hline
+    $\frac{d}{dt} c_i = k_{uptake}\cdot \frac{A}{V} - k_{cons} - c_i\cdot\frac{\dot{V}}{V} $\\ \hline
 \end{tabular}
 \newline
 \newline
@@ -77,4 +77,27 @@ The tables below contain all species, parameters and equations used in the VGM.
 \newline
 
 \section{Main results}
+
+\subsection{Single cell growth trajectories have rather sigmoidal form}
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=6cm,keepaspectratio]{graphics/VGM_sigm_curve.png}
+        \caption{Figure taken from (cite Goldenbogen here!!). Plot total cell volume over time. The predicted single cell growth trajectory is neither an exponential function nor a linear function, but rather sigmoidal. Right: the ration between $k_{uptake}$ and $k_{consume}$ determines the maximum cell volume. If this ratio is kept constant but $k_{uptake}$ and $k_{consume}$ increased or decreased only the growth rate changes.}
+        \label{fig:VGM_sigm_curves}
+    \end{center}
+\end{figure}
+
+
+\subsection{Ratio of osmolyte uptake and consumption defines final cell volume}
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=8cm,keepaspectratio]{graphics/VGM_growth_curves.png}
+        \caption{Figure taken from (cite Goldenbogen here!!). Plot total cell volume over time. The ratio between $k_{uptake}$ and $k_{consume}$ determines the maximum cell volume. If this ratio is kept constant but $k_{uptake}$ and $k_{consume}$ increased or decreased only the growth rate changes.}
+        \label{fig:VGM_growth_curves}
+    \end{center}
+\end{figure}
+
+
 %\end{document}
