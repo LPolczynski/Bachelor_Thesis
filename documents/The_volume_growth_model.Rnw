@@ -79,11 +79,12 @@ The tables below contain all species, parameters and equations used in the VGM.
 \section{Main results}
 
 \subsection{Single cell growth trajectories have rather sigmoidal shape}
+It is often assumed, that single cells grow exponentially. The VGM predicts another, rather sigmoidal growth trajectory. The model was fitted and tested with experimental single cell volume data from light microscopy.
 
 \begin{figure}[H]
     \begin{center}
         \includegraphics[width=8cm,keepaspectratio]{graphics/VGM_sigm_curve.png}
-        \caption{Figure taken from (cite Goldenbogen here!!). Plot total cell volume over time. The predicted single cell growth trajectory is neither an exponential function nor a linear function, but rather sigmoidal. Right: the ration between $k_{uptake}$ and $k_{consume}$ determines the maximum cell volume. If this ratio is kept constant but $k_{uptake}$ and $k_{consume}$ increased or decreased only the growth rate changes.}
+        \caption{Figure taken from (cite Goldenbogen here!!). Plot total cell volume over time. The predicted single cell growth trajectory is neither an exponential function nor a linear function, but rather sigmoidal.}
         \label{fig:VGM_sigm_curves}
     \end{center}
 \end{figure}
@@ -100,6 +101,7 @@ The tables below contain all species, parameters and equations used in the VGM.
 \end{figure}
 
 \subsection{Cell wall extensibility of bud has to be orders of magnitude greater than mother in order to grow}
+
 \begin{figure}[H]
     \begin{center}
     \includegraphics[width=12cm,keepaspectratio]{graphics/VGM_extensibility.png}
