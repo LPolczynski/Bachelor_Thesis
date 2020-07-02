@@ -42,6 +42,9 @@
 
 \chapter{Results}
 \input{Results.Rnw}
+
+\chapter{Cyclin expression}
+\input{Cycln_expression.Rnw} 
 %\chapter{The merged model}
 %\input{The_merged_model.Rnw}
 
