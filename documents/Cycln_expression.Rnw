@@ -17,7 +17,7 @@ In order to maintain  concentration homeostasis of proteins and mRNA in growing 
   \item mRNA transcription per gene copy has to increase
 \end{itemize}
 Without directly mentioning it, the first assumption is already made in the BGM, by assuming the second order kinetic with the biomass as a reactant of the mRNA. The same number of mRNA molecules yields a higher protein production, when the internal biomass increases. \newline
-The second assumption is not included and mRNA numbers are volume independent. This leads to dilution of mRNA. Also since the ratio $\frac{B}{V}$ is decreasing in the growing cell protein concentrations decrease aswell. In th BGM this has no effect, because the thresholds for phase transition are defined for absolute molecule number, which of course increase. 
+The second assumption is not included and mRNA numbers are volume independent. This leads to dilution of mRNA. Also since the ratio $\frac{B}{V}$ is decreasing in the growing cell protein concentrations decrease aswell. In the BGM this has no effect, because the thresholds for phase transition are defined for absolute molecule number, which of course increase. 
 
 
 
