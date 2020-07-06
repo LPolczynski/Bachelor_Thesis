@@ -42,6 +42,7 @@
 
 \chapter{Results}
 \input{Results.Rnw}
+\input{Analysis.Rnw}
 
 \chapter{Cyclin expression}
 \input{Cycln_expression.Rnw} 
