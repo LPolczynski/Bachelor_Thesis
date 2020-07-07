@@ -6,7 +6,7 @@ from math import pi
 #constants
 coupling = False
 threshold = {'Cln':30,'Clb':6}
-dur = 15
+dur = 1500
 
 #parameter
 #cyclins

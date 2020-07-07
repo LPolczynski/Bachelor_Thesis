@@ -14,7 +14,7 @@ def main():
     second = str(datetime.now().time().second)
     timepoint = date + '-' + hour + '-' + minute + '-' + second
     starttime = time()
-    pop = simulation(2, dur)
+    pop = simulation(10, dur)
     stoptime = time()
     print(len(pop))
     print(stoptime - starttime, ' s')
