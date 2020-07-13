@@ -40,12 +40,19 @@
 \chapter{The volume growth model}
 \input{The_volume_growth_model.Rnw}
 
+\chapter{The merged growth model}
+\input{The_merged_growth_model.Rnw}
+
 \chapter{Results}
 \input{Results.Rnw}
-\input{Analysis.Rnw}
 
 \chapter{Cyclin expression}
 \input{Cycln_expression.Rnw} 
+
+\chapter{Discussion}
+\input{Discussion.Rnw}
+
+
 %\chapter{The merged model}
 %\input{The_merged_model.Rnw}
 
