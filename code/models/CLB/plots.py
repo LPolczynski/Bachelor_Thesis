@@ -76,6 +76,8 @@ def plot_pop_volume_life(pop, xlab, ylab, save_name, int_1, int_2, save_dir):
     f1.savefig(save_dir + save_name)
 
 
+
+
 def plot_species(cell, save_dir, cell_nr, plot_conc=False):
     spec_nr = int(len(cell.species_cyclins) / 2) + len(cell.species_growth_m) + 2
     fig, ax = plt.subplots(spec_nr, 2, figsize=(32, 64))

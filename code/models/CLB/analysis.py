@@ -24,7 +24,10 @@ def main():
     growth = [5,10,15,20]
     labels=['Clb local','fixed G2', 'Clb not local']
     plot_size_distr(dire,growth,labels)
-
+    
+    dire = ['pop_for_plots/MM/','pop_for_plots/MM_noCLB','pop_for_plots/MM_CLBnoLOC']
+    growth = [5,10,15,20,25,30]
+    
     pop_dir = './results/2020-07-05-growth-15/'
     plot_G1(pop_dir)
     plot_G2(pop_dir)

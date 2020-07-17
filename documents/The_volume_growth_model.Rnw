@@ -10,101 +10,47 @@
 %\begin{document}
 
 \section{Idea and Assumptions}
-The VGM links three basic quantities to describe the growth trajectory of single cells: volume, osmotic and tugor pressure. Based on a formalism established by Kedem-Katchalsky water flux across the cell membrane is proportional to the difference between pressures driving water out of the cell (outer osmotic pressure and tugor pressure) and pressures driving water into the cell (inner osmotic pressure). Using Van t'Hoff's law inner and outer osmotic pressure are proportional to inner and outer concentration of osmotically active molecules (osmolytes). The concentration of osmolytes outside of the cell is set constant. The concentration of osmolytes insde the cell increases with an uptake rate proportional to the cell's surface and decreases due to dilution of the growing cell and osmolyte consumption proportional to the cell's volume. \newline
+The VGM links three basic quantities to describe the growth trajectory of single cells: volume, osmotic and tugor pressure. Based on a formalism established by Kedem-Katchalsky water flux across the cell membrane is proportional to the difference between pressures driving water out of the cell (outer osmotic pressure and tugor pressure) and pressures driving water into the cell (inner osmotic pressure). Using Van t'Hoff's law inner and outer osmotic pressure are proportional to inner and outer concentration of osmotically active molecules (osmolytes). The concentration of osmolytes outside of the cell is set constant. The amount of osmolytes insde the cell increases with an uptake rate proportional to the cell's surface and decreases with an osmolyte consumption proportional to the cell's volume.
+The change in concentration is derived by scaling with the cell volume and a dilution term.\newline
 The tugor pressure acts on the cell wall and is increased by water influx- the cell wall gets elastically expanded. When a critical tugor pressure is reached, the cell wall expands plastically (permanently) and tugor pressure is released. \newline
 This circuit results in a stepwise increase in cell volume, until the final size is reached: When the inner osmotic pressure is greater than the sum of outer osmotic pressure and tugor pressure water flows in and the cell grows. The tugor pressure increases, ultimately leading to a growth stop, but upon reaching the critical value for plastic expansion drops again, allowing some  more growth.\newline
 \newline
 To simulate the growth of a bud during S/G2/M phase, after letting the mother cell grow in G1, a second cell is initialized with small starting volume. Both cells are coupled via exchange terms for water and osmolytes, depending on tugor pressure and osmolyte concentrations. Both mother and bud are approximated as spheres.
 
-\section{Equations and parameters}
-The tables below contain all species, parameters and equations used in the VGM.
-\newline
-\begin{center}
-    \begin{tabular}{|l|p{9.7cm}|}
-    \hline
-    \textbf{Species} & \textbf{description} \\ \hline
-    $V_{os}$ & Osmolitically active volume, increases with water influx \\ \hline
-    $V_{b}$ & Volume of solid components, proportional to reference volume \\ \hline
-    $V$ & Total cell volume \\ \hline
-    $V_{ref}$ & Reference volume, volume of relaxed cell without elastic expansion (grows by plastic expansion) \\ \hline
-    $\Pi_{t}$ & Tugor pressure \\ \hline
-    $c_{i}$ & Inner osmolyte concentration \\ \hline
-    \end{tabular}
-\end{center}
-
-\begin{center}
-    \begin{tabular}{ | l | p{6cm} | l | l |}
-    \hline
-    \textbf{parameter} & \textbf{decription} & \textbf{value} & \textbf{unit} \\ \hline
-    $V_{os}^0$ & Initial volume of solid components & $10 $ & $\mu m^3$ \\ \hline
-    $V_{b}^0$ & Initial volume of solid components & $3 $ & $\mu m^3$\\ \hline
-    $c_i^0$ & Initial inner osmolyte concentration & $322.2 $ & $mM$ \\ \hline
-    $\Pi_t^0$ & Initial tugor pressure & $2.0 \cdot 10^5 $ & $Pa$ \\ \hline
-    $c_e$ & Outer osmolyte concentration & $ 240.0 $ & $mM$ \\ \hline
-    $R$ & Ideal gass constant & $8.314 $ & $\frac{J}{mol\cdot K }$\\ \hline
-    $T$ & Temperature & $293.0 $&$K$ \\ \hline
-    $L_p$ & Membrane water permeability & $1.19\cdot 10^{-6} $ & $\frac{\mu m}{s\cdot Pa}$ \\ \hline
-    $\Pi_{tc}$ & Critical tugor pressure & $2.0 \cdot 10^5 $ & $Pa$ \\ \hline
-    $d$ & Cell wall thickness & $0.115$ & $\mu m$ \\ \hline
-    $\Phi$ & Cell wall extensibility & $1.0 \cdot 10^{-7}$ & $\frac{1}{s\cdot Pa}$ \\ \hline
-    $E$ & Young's modulus & $2.58\cdot 10^6$ &$Pa$\\ \hline
-    $k_{uptake}$ & Osmolyte uptake rate constant & $2.5 \cdot 10^{-16}$ & $\frac{mM}{s\cdot \mu m^2}$ \\ \hline
-    $k_{cons}$ & Osmolyte consumption rate constant & $3.0 \cdot 10^{-16}$ & $arb.unit$ \\ \hline
-    \end{tabular}
-\end{center}
-
-\noindent
-\begin{tabular}{|l|}
-    \hline
-    \textbf{ODE} \\ \hline
-    $\frac{d}{dt} V_{os} = - L_p\cdot A \cdot \left(\Pi_t + \Pi_e - \Pi_i\right)$ \\ \hline
-    $\frac{d}{dt} V_{b} = 0.2 \cdot V_{ref}$ \\ \hline
-    $\frac{d}{dt} V = \dot{V_{os}} + \dot{V_{b}}$ \\ \hline
-    $\frac{d}{dt} V_{ref} = \frac{\Phi\cdot r}{2\cdot d}\cdot f\left(\Pi_t\right)\cdot V_{ref}$\\ \hline
-    $\frac{d}{dt} \Pi_t = \frac{E\cdot 2 d}{r}\cdot \frac{\dot{V}}{V_{ref}} - E\cdot\Phi\cdot f\left(\Pi_t\right) - \Pi_t\cdot\frac{\dot{V}}{V} $\\ \hline
-    $\frac{d}{dt} c_i = k_{uptake}\cdot \frac{A}{V} - k_{cons} - c_i\cdot\frac{\dot{V}}{V} $\\ \hline
-\end{tabular}
-\newline
-\newline
-\noindent
-\begin{tabular}{|l|}
-    \hline 
-    $f\left(\Pi_t\right) = max\left(\Pi_{tc} - \Pi_t, 0 \right)$ \\ \hline
-    $A = \left(4\pi\right)^\frac{1}{3} \cdot \left(3 V\right)^\frac{2}{3}$ \\ \hline
-    $r = \left(\frac{3}{4\pi} V\right)^\frac{1}{3}$ \\ \hline
-\end{tabular}
-\newline
-\newline
-
 \section{Main results}
-
-\subsection{Single cell growth trajectories have rather sigmoidal shape}
-It is often assumed, that single cells grow exponentially. The VGM predicts another, rather sigmoidal growth trajectory. The model was fitted and tested with experimental single cell volume data from light microscopy.
-
-\begin{figure}[H]
-    \begin{center}
-        \includegraphics[width=8cm,keepaspectratio]{graphics/VGM_sigm_curve.png}
-        \caption{Figure taken from (cite Goldenbogen here!!). Plot total cell volume over time. The predicted single cell growth trajectory is neither an exponential function nor a linear function, but rather sigmoidal.}
+It is often assumed, that single cells grow exponentially. The VGM predicts another, rather sigmoidal growth trajectory (Figure \ref{fig:VGM_sigm_curves}). The model was fitted and tested with experimental single cell volume data from light microscopy.
+\newline
+Another result of the VGM is the emergence of a limit on the cell volume.
+This limit is dependent on the ratio of the osmolyte uptake rate and volume dependent consumption (Figure \ref{fig:VGM_growth_curves}). The final cell radius is given by the equation
+\begin{equation}
+    r_{final} = 3\cdot\frac{k_{uptake}}{k_{consumption}}
+    \label{eq:r_final}
+\end{equation}
+For a fixed ratio the slope of the trajectory depends on the absolute values of $k_{uptake}$ and $k_{consumption}$ (Figure \ref{fig:VGM_growth_curves}).
+\begin{figure}[b!]
+    \begin{subfigure}[t]{0.37\textwidth}
+    \centering
+        \includegraphics[width=4cm,keepaspectratio]{graphics/VGM_sigm_curve.png}
+        \caption{Cell volume over time. The predicted single cell growth
+        trajectory is neither an exponential function nor a linear function,
+        but rather sigmoidal.}
         \label{fig:VGM_sigm_curves}
-    \end{center}
-\end{figure}
-
-
-\subsection{Ratio of osmolyte uptake and consumption defines final cell volume}
-
-\begin{figure}[H]
-    \begin{center}
-        \includegraphics[width=10cm,keepaspectratio]{graphics/VGM_growth_curves.png}
-        \caption{Figure taken from (cite Goldenbogen here!!). Plot total cell volume over time. The ratio between $k_{uptake}$ and $k_{consume}$ determines the maximum cell volume. If this ratio is kept constant but $k_{uptake}$ and $k_{consume}$ increased or decreased only the growth rate changes.}
+    \end{subfigure}
+    \begin{subfigure}[t]{0.55\textwidth}
+    \centering
+        \includegraphics[width=6cm,keepaspectratio]{graphics/VGM_growth_curves.png}
+        \caption{Cell volume over time. The ratio between $k_{uptake}$ and
+        $k_{consume}$ determines the maximum cell volume. If this ratio is
+        kept constant but $k_{uptake}$ and $k_{consume}$ increased or
+        decreased only the growth rate changes.}
         \label{fig:VGM_growth_curves}
-    \end{center}
+    \end{subfigure}
+    \caption{Figures taken from Goldenbogen et al. 2019}
 \end{figure}
-
-\subsection{Cell wall extensibility of bud has to be orders of magnitude greater than mother in order to grow}
-
+If the mother and the bud are coupled via water and osmolyte exchange the bud can only grow when its cell wall extensibility is several orders of magnitude higher than the mother's.
 \begin{figure}[H]
     \begin{center}
-    \includegraphics[width=12cm,keepaspectratio]{graphics/VGM_extensibility.png}
+    \includegraphics[width=10cm,keepaspectratio]{graphics/VGM_extensibility.png}
     \caption{Figure take from (cite Goldenbogen here!!). (Left) Scheme of mother/bud coupling. (Right) Growth trajectories of mother and bud for different ratios of their cell wall extensibilities.}
     \label{fig:VGM_extensibility}
     \end{center}
