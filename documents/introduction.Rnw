@@ -1,65 +1,80 @@
-
-Growth is a fundamental property of life. External resources are absorbed,
-transformed and incorporated in a continuous process of expansion. Individual
-entities compete for these resources in a constant struggle for survival and
-proliferation.\newline
-Just as fundamental as growth itself, is its regulation. Smaller entities
-assemble in larger units by coordination. Prime examples of failed regulation
-are overexpression of cell components, cancerous cell growth in multicellular
-lifeforms or the current economic and political  system.\newline
-\newline
-Yeast, in particular \textit{Saccharomyces cerevisiae}, is a common model organism. Reason be its easy cultivation, relative small genome and yet distinctive eukaryotic architecture. A feature of widespread interest is the cycle of cell division, worthwhile to study on yeast, as it is conserved throughout eukaryotic organisms up to mammalians. While the sequence of events in that cycle is well understood, their regulation leaves open questions. A prominent observation is an apparent critical size that yeast cells have to reach, before they start growing a bud. This phenomena suggests size control, to ensure stable cell cycle progression. Various implementations for this have been proposed, with no definitive answer yet. 
-
 \section{Motivation}
-This project has two parents, both models that originate from the same research group. Even though sharing a common theme- the growth of \textit{s.cerevisiae}- they look at it from two very different angels. 
-\begin{itemize}
-    \item \textbf{Size homeostasis can be intrinsic to growing cell populations and explained without size sensing or signalling} (published 2012 in the FEBS Journal by T.W.Spiesser, C.Müller, G.Schreiber, M.Krantz and E.Klipp). Here called BGM (Biomass Growth Model)
-    \item \textbf{Osmolyte homeostasis controls single-cell growth rate and maximum cell size of Saccharomyces cerevisiae} (published 2019 in npj Systems Biology and Applications by T.Altenburg, B.Goldenbogen, \\J.Uhlendorf and  E.Klipp). Here called VGM (Volume Growth Model)
-\end{itemize}
+In 2019 Altenburg et al. proposed a model for volume growth of single yeast cells (\textit{s.cerevisiae}) \cite{Altenburg2019} (hereafter VGM).
+Their goal was to provide a mechanistic explanation for changes of the cell volume. The model was based on thermodynamic principles,
+as opposed to phenomenological descriptions of volume trajectories.
+It included external and internal osmolyte concentrations and could accurately reproduce cellular reactions in osmotic shock experiments.
+Additionaly an extended version of the model was able to simulate the growth of mother cells and buds.
+The simulations where limited to one cell cycle and the duration of the cell cycle phases were fixed.
+A natural expansion of the model would be to cover several generations and to introduce an active cell cycle regulation.
+This would be an opportunity to test its validity on long time scales and for variable cell phase durations.
 \newline
-The BGM simulates populations of growing single cells.
-The rythm of growth and division for these cells is set by a recurring cycle of four phases, the cell cycle.
-In the first phase they simply grow themselves.
-During the next three phases buds emerge and then seperate from them.
-New cells are born. As generation after generation is being simulated this leads to an ever growing number of cells, thus allowing interesting observations on the population level.
-The model includes a simplified version of the signalling network that controls this cycle.
-So called cyclins are produced with rates dependent on the available biomass.
-When these cyclins reach a certain threshold level the cell cycle progresses to the next phase. \newline
-The BGM relies on a so called self-replicator, where the cell's biomass produces more biomass. The consequence is exponential growth.
-While the growth of a yeast population clearly has an exponential phase, there is an ongoing discussion about the nature of single cell yeast growth.
-Various models have been proposed, the most common being exponential growth and linear growth with several distinct phases. \newline
-Goldenbogen et al. proposed another model, the VGM.
-It assumes the pressure difference between the inside and the outside of the cell to be the driving force for water uptake. 
-A delicate balance between inner osmotic pressure and cell wall pressure shapes the dynamics of the growth process.
-An extension of the model allows to simulate a mother cell with a growing bud. \newline
-It promises to be an interesting next step to integrate this model for single cell growth into the population framework of the BGM. 
-Two current limitations of the VGM that are to be overcome are the preset lengths of the cell phases and the coverage of only one cell cycle.
+In 2012 Spießer et al. presented a model that provided a framework for cell cycle regulation \cite{Spiesser2012} (hereafter BGM).
+It was based on auto catalytically growing cells.
+As these cells grew and divided over many generations a large and diverse population formed.
+Even though rapid advances are made in the acquisition of single cell data,
+a clear understanding of experimental results still is often clouded by measurements over large numbers of cells.
+This allows observations only on averaged mean cells and can lead to confusion of individual cell characteristics with emergent properties of the ensemble.
+An example is the homeostasis of cell size on the population level, 
+whilst single cells do not necessarily stop growing.
+The simulation of \textit{in silico} ensembles can help to reproduce such experimental results and shed light on underlying mechanisms.
+If the VGM was to succesfully replace the growth module for single cells in the BGM such in silico experiments could be performed for the VGM too.
+The inculsion of osmolyte concentrations in the VGM could be used to study the effects of osmotic shocks and variation of the osmolyte concentration of the growth medium on whole populations, 
+instead of just single cells.
+
+
 
 \section{The cell cycle of yeast}
-New cells descent from existing cells by replication of all necessary components and subsequent division. Needless to say, precise coordination is crucial. \newline
-Even though very similar to others the cell cycle in \textit{s.cerevisiae} has some particularities, namely the formation of a bud and a following asymmetrical division. The result is a big mother cell and a smaller daughter cell,  as opposed to the more common equal division with two indistinguishable daughter cells. 
-The cell cycle is divided in interphase (I) and mitotic phase (M). The interphase is again subdivided into a first gap phase between division and DNA-replication (G1) where only the mother cell grows. This is followed by a synthesis phase (S) where, after passing the start signal (START) at the end of G1, DNA-replication and bud formation begin. Then comes a second gap phase (G2) where mother and bud continue growing and the duplicated nucleous is transferred to the bud and the Interphase ends. In the last phase, the mitotic phase mother and bud divide. Because it generally is smaller than older (mother) cells, the new born cell is called a 'daughter' cell during its first cycle.
+Many organisms divide symmetrically. 
+Budding yeast is unusual in that it divides asymmetrically \cite{November1977}. 
+Whilst growing it bulges out and forms a bud.
+After some time the bud separates from the parent cell.
+In this process all the necessary components, such as the DNA have to be replicated and transferred to the bud.
+Cells that bud for the first time are called \textit{daughter} cells.
+Older cells are called \textit{mother} cells.
+The cycle of growth and division is generally divided in two main phases, the interphase (I), where all growth related processes happen and the mitotic phase (M), where the parent cell and the bud separate.
+The interphase is again subdivided into a first gap phase between division and DNA-replication (G1) where only the parent cell grows. 
+This is followed by a synthesis phase (S) where,
+after passing the start signal (START) at the end of G1, 
+DNA-replication and bud formation begin. 
+Then comes a second gap phase (G2) where the parent cell and bud continue growing and the duplicated nucleous is transferred to the bud.
 \begin{figure}[H]
   \centering
   \includegraphics[width=7cm,keepaspectratio]{graphics/Intro_cellCycle.png}
-  \caption{Cell cycle in yeast. Figure taken from Jing Cui 2017}
+  \caption{Cell cycle in yeast. Figure taken from \cite{Cui2017}}
   \label{fig:Intro_cellCycle}
 \end{figure}
 
 \newline
-The progression from one phase to another is controlled by a vast network of signalling proteins, culminating in the expression of a cascade of genes at each transition. Two important protein classes in this network are cyclins and cyclin-dependent-kinases (CDK). A kinase is an enzyme that transfers a phosphate from a high energy molecule, such as ATP, to a substrate, hence drastically changing its biochemical properties. CDK's need a cyclin to bind to them, in order to be active. Depending on the binding cyclin they target different substrates. 
+The progression from one phase to another is controlled by a vast network of signalling proteins.
+It culminates in the expression of a cascade of genes at each transition \cite{Noguchi2014}.
+Two important protein classes in this network are cyclins and cyclin-dependent-kinases (CDK). 
+A kinase is an enzyme that attaches a phosphate group to its substrate, hence drastically changing its biochemical properties. 
+In order to be active CDK's need a cyclin to bind to them.
+Depending on the binding cyclin they target different substrates \cite{Enserink2010}. 
 \newline
-Another import class of regulatory proteins is called transcription factors. 
-Located in the nucleous they bind to strands of DNA and activate or deactivate genes, by changing their morphology and blocking/exposing binding sites  for polymerases. 
-The activity of many transcription factors is regulated by phosphorylation and dephosphorylation. 
-When the right cyclin is abundant in sufficient amounts and binding to the CDKs, specific TFs are targeted and the genes for transition to the next cell phase are expressed. \newline
-The following simplified description of the network regulating the transition from the G1 phase to the S phase is based on Barber et al. 2020.\newline
-During the early G1 phase the inhibitor Whi5 is localized in the nucleus of the cell. There it binds to the transcription factor SBF and inactivates it. Active SBF induces the transcription of the genes needed for the phase transition. The cyclin Cln3 binds to the cyclin dependent kinase Cdk1 and phosphorylates Whi5. Phosphrylated Whi5 releases SBF and is exported from the nucleus. The now free SBF induces the transcription of several other cyclins, Cln1 and Cln2 among the first. These cyclins further phosphorylate Whi5, leading to a positive feedback loop and subsequent transition to the S phase.
+Another important class of regulatory proteins is called transcription factors. 
+They regulate the activity of genes by binding to strands of DNA.
+This changes its morphology and binding sites for RNA-polymerases are inhibited or promoted.
+The activity of many transcription factors is regulated by phosphorylation and dephosphorylation \cite{Hunter1992}. 
+\newline
+Here the cyclins come into play.
+When the right cyclin is abundant in sufficient amounts the CDKs target
+specific transcription \cite{Enserink2010} factors and the genes for transition to the next cell phase are expressed. \newline
+The following simplified description of the network regulating the transition from the G1 phase to the S phase is based on Barber et al. 2020 \cite{Barber2020}.\newline
+During the early G1 phase the inhibitor Whi5 is localized in the nucleus of the cell.
+There it binds to the transcription factor SBF and inactivates it.
+Active SBF induces the transcription of the genes needed for the phase transition. 
+The cyclin Cln3 binds to the cyclin dependent kinase Cdk1 and phosphorylates Whi5. 
+Phosphrylated Whi5 releases SBF and is exported from the nucleus. 
+The now free SBF induces the transcription of several other cyclins, 
+Cln1 and Cln2 among the first.
+These cyclins further phosphorylate Whi5, 
+leading to a positive feedback loop 
+and subsequent transition to the S phase.
 \begin{figure}[H]
   \centering
   \includegraphics[width=6cm,keepaspectratio]{graphics/Intro_cycleContr.jpg}
-  \caption{Schematic representation of the regulation of the G1 phase in yeast. Figure taken from Barber et al. 2020}
+  \caption{Schematic representation of the regulation of the G1 phase in yeast. Figure taken from \cite{Barber2020}}
   \label{fig:Intro_cycleContr}
 \end{figure}
 
-%\end{document}

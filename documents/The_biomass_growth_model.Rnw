@@ -1,98 +1,106 @@
-%\documentclass{report}
-%\usepackage[utf8]{inputenc}
-%\usepackage{amsmath}
-%\usepackage{graphicx}
-%\usepackage{float}
-
-%\renewcommand{\arraystretch}{1.5}
-
-%\title{The biomass growth model}
-%\begin{document}
-%\maketitle
-%\noindent
-The BGM simulates cell populations with independent single cells growing and dividing over several generations. This allows some interesting in silico experiments, regarding the effect of changes of the single cell properties on the resulting population.
-\section{Idea and assumptions}
-The heart of the BGM is the simulation of single cells. As they grow in size they go through a recurring cycle of phases. Most important is the first phase, where the cell simply grows until it is mature enough to grow daugther cells. Once this point is reached for the rest of the cycle the cell itself stops growing and a bud grows instead. Again when the bud is mature enough, it separates from the mother and becomes an independent cell. \newline
-The growth dynamics are modeled using a self-replicator approach. Two kinds of biomass are defined, one called \textit{structual biomass} being directly proportional to the cells' surface and another called \textit{internal biomass}. The internal biomass produces both the structural biomass and itself, resulting in exponential growth. This is dampened by the next assumption. The efficiency of the cells biosynthetic machinery, in this model the internal biomass, is assumed to be inversely proportional to the cell volume. Also to account for greater capacities to take up nutrients as the cells' surface increases biosynthetic efficiency and cell surface are assumed to be proportional. \newline
-The progress of the cell cycle is regulated by a protein signalling network. Cyclins are produced at rates depending on the cells' biosynthetic capacity (just like the biomass) and the availability of their respective mRNA. This mRNA is produced in stochastic bursts, independent of biosynthetic capacities or cell volume. Although in this thesis and the original publication by T.Spießer only minimal versions of the cyclin network are implemented, one could make the transcription of mRNA dependent on the abundance of cyclins or other regulatory components. This would be the starting point to implement more elaborate schemes of the network, as for example the one presented in the introduction. Cyclins themselve do not exhibit catalytic activity, but program free CDKs. The CDKs are assumed to be abundant in sufficient and stable amount. The are not explicitly modeled. The point of phase transition is defined by a threshold amount of cyclin molecules, the transition itself as an instantaneous event. 
-
-\section{Main results}
-In the following sections main results of the original study by T.Spießer are presented, intended to give an overview of its conclusions and to set stage for a later comparison with the modified model.\newline
+\section{The biomass growth model}
+The BGM simulates populations of independently growing yeast cells (\textit{s.cerevisiae}).
+As they go through a cycle of cell phases they grow buds and divide when the buds are mature enough.
+As a result the number of cells in the population increases significantly over time.
+The duration of the cell cycle phases are a subject of intensive study and the precise coordination of cell growth and division remains to be determined.
+The BGM aims at illuminating the underlying processes and proposes a possible mechanism.
+At its core lies a balance between the cells' capacity to synthesize \textit{cyclins} and their rate of degradation.
+In this way cell cycle progression becomes a function of the metabolic capacity of the cell.
+Cyclins are certain proteins that are part of a vast signalling network,
+which controls the activity of cell phase specific genes sites and regulates the transition from one phase to the next.
+These phase transitions are often induced by switch like behavior of the system,
+when key cyclins reach a critical level.
+Once this threshold is overcome, the genetic program for the next phase is started.
 \newline
-An early version of the BGM published in 2012 (T.Spießer et al.) had only
-one cyclin $Cln$ governing the length of the G1 phase and a fixed S/G2/M phase (hereby 'fixed G2 BGM'). 
-Already this even simpler version produced populations with a quickly converging mean cell size,
-while the individual cells could continue growing (Figure 
-\ref{fig:BGM_sizeH}). 
-This convergence was lost, when the scaling of the metabolic capacity with
-the ratio of the cell surface to the cell volume was removed (Figure \ref{fig:BGM_AVRem}).\newline
-As can be seen in Figure \ref{fig:BGM_BrDens} the BGM shows a dilution of metabolic biomass. \newline
-\begin{figure*}[b!]
-  \begin{subfigure}[t]{0.3\textwidth}
+A greatly simplified model of this regulatory machinery is implemented in the BGM.
+It comprises of two dummy cyclins \textit{Cln} and \textit{Clb} and their mRNA.
+The cell cycle is divided into four phases (G1, S, G2, M),
+the transition from one to another is implemented as an instantaneous event.
+The durations of the S and M phase are fixed, 
+while the G1 and the G2 phase end when Cln and Clb levels reach a threshold respectively.
+Their production is described by a second order reaction kinetic, 
+which dependeds on the available mRNA and the metabolic capacity of the cell.
+Including a first order degradation kinetic the time derivative of the cyclin concentration $\frac{Cln}{V$} is given as
+\begin{equation}
+    \frac{d}{dt}\left(\frac{Cln}{V}\right) = k_p\cdot mCLN\cdot B_R\frac{A}{V^2} - k_d\cdot \frac{Cln}{V} - n\cdot\frac{\dot V}{V^2}
+    \label{eq:Cln_conc}
+\end{equation}
+Computationally easier is the time derivative of the number of cyclin molecules $Cln$
+\begin{equation}
+    \dot{Cln} = k_p\cdot mCLN\cdot B_R\frac{A}{V} - k_d\cdot Cln
+    \label{eq:Cln}
+\end{equation}
+$k_p$ and $k_d$ are the production and degradation rate constants, $mCLN$ and $B_R$ the mRNA and the \textit{internal} biomass, $A$ and $V$ the surface and volume of the cell.
+The term $B_R\cdot A$ represents the metabolic capacity of the cell.
+Spießer et al. justified its dependence on the cell surface with the availability of nutrients,
+as for an increasing area of the cell membrane the uptake of nutrients should increase as well \cite{Spiesser2012}.
+\newline
+The mRNA is produced in stochastic bursts, independently of the metabolic capacity.
+This makes the duration of the G1 and G2 phase noisy, 
+which produces asynchronous cell cultures.
+\newline
+Similar to the cyclins the total cellular biomass $B$ is produced as a function of the internal biomass and the biomass precursor $mB$.
+\begin{equation}
+    \dot{B} = k_p\cdot mB\cdot B_R\frac{A}{V} - k_d\cdot B
+    \label{eq:BGM_B}
+\end{equation}
+The biomass itself is divided into biosynthetically active, \textit{internal} biomass and inactive \textit{structural} biomass of which the cell membrane and wall comprise.
+The metabolic capacity of the cell is allocated between the two according to the allocation parameters $k_R$ and $k_A$:
+\begin{align}
+  \dot B_R &= \dot B\cdot \frac{k_R}{k_R + k_A}
+  \label{eq:deriv_BR}\\
+  \dot B_A &= \dot B\cdot \frac{k_A}{k_R + k_A}
+  \label{eq:deriv_BA}
+\end{align}
+This model for biomass synthesis results in auto catalytic growth, 
+which normally leads to exponential growth of the cell.
+Because in this case the rate of biosynthesis is scaled with the surface to volume ratio (eq. \ref{eq:BGM_B}) cell growth is more polynomial.
+It is slowed down through a feedback created by the proportionality of the structural biomass to the cell surface $B_A \sim A$.
+\newline
+During the G1 phase the mother grows undisturbed until the amount of $Cln$ reaches the necessary threshold for a cell phase transition. 
+Upon entering the S phase the mother stops growing and a bud begins to form. 
+Fig. \ref{fig:BGM_twoGen} shows the trajectories of a single cell over two generations.
+One can see the Volume of mother and bud, the amount of CLN1/2 and its mRNA and the internal and structural biomass.
+After the mitosis the mother and the bud separate and split up the internal biomass and remaining cyclins between them.
+\newline
+In accordance with experimental observations the BGM predicted a distinct drop of the average G1 phase duration between the very first generation (daughter cells) and the second generation (mother cells).
+\newline
+\begin{figure}[t!]
+  \begin{subfigure}[t]{0.5\textwidth}
     \centering
-    \includegraphics[width=3.8cm,keepaspectratio]{graphics/BGM_size_homeostasis.png}
-    \caption{Cell volume for simulated standard population}
+    \includegraphics[width=5cm,keepaspectratio]{graphics/BGM_single_cell_two_gen.jpg}
+    \caption{Temporal evolution of mean cell volume with standard deviation. The thin lines represent single cell volume trajectories.}
+    \label{fig:BGM_twoGen}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[width=5cm,keepaspectratio]{graphics/BGM_G1_duration.png}
+  \caption{Average time spend in G1 depending on genealogical age. Comparison of experimental data and a simulated population}
+  \label{fig:BGMG1D}
+  \end{subfigure}
+  \caption{Figures taken from \cite{Spiesser2012}}
+\end{figure}
+On the population level the mean cell size converged to a stable value (fig. \ref{fig:BGM_meanV}).
+The BGM allows the tuning of the cellular growth rate.
+As is observed in experiments (fig. \ref{fig:BGM_meanV}), 
+the mean cell size is a function of this rate.
+
+\begin{figure}[H]
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[width=5cm,keepaspectratio]{graphics/BGM_size_homeostasis.png}
+    \caption{Temporal evolution of mean cell volume with standard deviation. The thin lines represent single cell volume trajectories.}
     \label{fig:BGM_sizeH}
   \end{subfigure}
-  \begin{subfigure}[t]{0.3\textwidth}
+  \begin{subfigure}[t]{0.5\textwidth}
     \centering
-    \includegraphics[width=3.8cm,keepaspectratio]{graphics/BGM_AtoV_rem.png}
-    \caption{Cell volume for simulation without surface to volume scaling 
-    of biosynthetic capacity}
-    \label{fig:BGM_AVRem}
-  \end{subfigure}
-  \begin{subfigure}[t]{0.3\textwidth}
-    \centering
-    \includegraphics[width=3.8cm,keepaspectratio]{graphics/BGM_BrDens.png}
-    \caption{\textit{Internal biomass} density for simulated standard 
-    population}
-    \label{fig:BGM_BrDens}
-  \end{subfigure}
-  \caption{Figures taken from Spießer et al. 2012. Mean and standard 
-  deviation from population simulation plotted. Thin lines are single cell 
-  results.}
-\end{figure*}
-
-\newline
-\noindent
-The growth rate of a population can be varied by adjusting the nutrient composition of the growth medium. 
-It can be observed that fast growing populations have higher average cell sizes and shorter G1 phases. 
-The fixed G2 BGM could already reproduce this. It also predicted a clear decrease in size variability with increasing growth rate (Figure \ref{fig:BGMmuCln}).
-In Spießer et al. 2012 they included experimental results from their
-laboratory regarding the variability of cell sizes for different growth
-media (-rates).They confirmed the dependence of the mean cell size on the
-growth rate, but found that the cell size variability within a culture did
-not change much with increasing growth rate. The BGM could reproduce this finding, when a variable G2 duration was introduced, governed by a second cyclin \textit{Clb}.
-This cyclin was assumed to be produced only by the biomass located in the bud (Figure \ref{fig:BGM_G2_sizevar}).
-\begin{figure}[t!]  
-  \begin{subfigure}[t]{0.65\textwidth}
-  \centering
-    \includegraphics[width=9cm,keepaspectratio]{graphics/BGM_growthrate_Cln.png}
-    \caption{(A) Cultures simulated for different growth rates, mean cell
-    size and standard deviation plotted. (B) Volume distribution at the 
-    end of simulations in (A).}
+    \includegraphics[width=5cm,keepaspectratio]{graphics/BGM_growthrate_Cln.png}
+    \caption{ Mean cell size and standard deviation for cultures simulated for different growth rates.}
     \label{fig:BGMmuCln}
   \end{subfigure}
-  \begin{subfigure}[t]{0.3\textwidth}
-    \centering
-    \includegraphics[width=4cm,keepaspectratio]{graphics/BGM_G2_size_variability.png}
-    \caption{Simulation with variable G2 phase and production of
-    \textit{Clb} localized in the bud.}
-    \label{fig:BGM_G2_sizevar}
-  \end{subfigure}
-  \caption{Figures taken from Spießer 2012 and 2015}
+  \caption{Figures taken from \cite{Spiesser2012}}
+  \label{fig:BGM_meanV}
 \end{figure}
-
-\newline
-A classic observation is a distinct drop of the G1 duration between daughter and mother cells (cite torres et al 2018). The BGM reproduces this.
-\begin{figure}[H]
-    \begin{center}
-    \includegraphics[width=6cm,keepaspectratio]{graphics/BGM_G1_duration.png}
-    \caption{Figure taken from (cite spießer 2012 here!!!). Average time spend in G1 depending on genealogical age. Comparison of experimental data and a simulated population}
-    \label{fig:BGMG1D}
-    \end{center}
-\end{figure}
-\noindent
 
 
 

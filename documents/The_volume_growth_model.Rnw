@@ -1,57 +1,92 @@
-%\documentclass{report}
-%\usepackage[utf8]{inputenc}
-%\usepackage{amsmath}
-%\usepackage{graphicx}
-%\usepackage{float}
-
-%\renewcommand{\arraystretch}{1.5}
-
-%\title{The volume growth model}
-%\begin{document}
-
-\section{Idea and Assumptions}
-The VGM links three basic quantities to describe the growth trajectory of single cells: volume, osmotic and tugor pressure. Based on a formalism established by Kedem-Katchalsky water flux across the cell membrane is proportional to the difference between pressures driving water out of the cell (outer osmotic pressure and tugor pressure) and pressures driving water into the cell (inner osmotic pressure). Using Van t'Hoff's law inner and outer osmotic pressure are proportional to inner and outer concentration of osmotically active molecules (osmolytes). The concentration of osmolytes outside of the cell is set constant. The amount of osmolytes insde the cell increases with an uptake rate proportional to the cell's surface and decreases with an osmolyte consumption proportional to the cell's volume.
-The change in concentration is derived by scaling with the cell volume and a dilution term.\newline
-The tugor pressure acts on the cell wall and is increased by water influx- the cell wall gets elastically expanded. When a critical tugor pressure is reached, the cell wall expands plastically (permanently) and tugor pressure is released. \newline
-This circuit results in a stepwise increase in cell volume, until the final size is reached: When the inner osmotic pressure is greater than the sum of outer osmotic pressure and tugor pressure water flows in and the cell grows. The tugor pressure increases, ultimately leading to a growth stop, but upon reaching the critical value for plastic expansion drops again, allowing some  more growth.\newline
-\newline
-To simulate the growth of a bud during S/G2/M phase, after letting the mother cell grow in G1, a second cell is initialized with small starting volume. Both cells are coupled via exchange terms for water and osmolytes, depending on tugor pressure and osmolyte concentrations. Both mother and bud are approximated as spheres.
-
-\section{Main results}
-It is often assumed, that single cells grow exponentially. The VGM predicts another, rather sigmoidal growth trajectory (Figure \ref{fig:VGM_sigm_curves}). The model was fitted and tested with experimental single cell volume data from light microscopy.
-\newline
-Another result of the VGM is the emergence of a limit on the cell volume.
-This limit is dependent on the ratio of the osmolyte uptake rate and volume dependent consumption (Figure \ref{fig:VGM_growth_curves}). The final cell radius is given by the equation
+\section{The volume growth model}
+The VGM describes the volume trajectories of single cells.
+While the BGM looks at growth from a metabolic angle namely the cells capacity to produce new biomass, 
+the VGM aims at a mechanistic explanation for cell growth.
+The core idea is that pressure differences between the inside and the outside of the cell result in a water flux $J_w$ across the cell membrane.
+Two kinds of pressure are considered to act on the cell, osmotics pressures and mechanic pressure.
+The osmotic pressures depend on the concentration of osmolytes inside and outside of the cell ($c_i$ and $c_e$) and are hence called internal and external osmotic pressure ($\Pi_i$ and $\Pi_e$).
+They are calculated using the equation for an ideal gas as 
+\begin{align}
+    \Pi_i &= c_i\cdot R\cdot T \\
+    \Pi_e &= c_e\cdot R\cdot T
+\end{align}
+with the gas constant $R$ and the temperature $T$.
+The mechanic pressure stems from the elastic deformation of the cell wall due to water influx.
+Like when filling a balloon with water a counter pressure builds up,
+which is called the tugor pressure $\Pi_t$.
+In a simplified view the volume of a cell is split into space taken up by solid macromolecules, e.g. osmolytically \textit{inactive} volume and water with all soluble components, e.g. osmotically \textit{active} volume.
+The osmotically active volume $V_{os}$ changes according to the water flux $J_w$.
+Written for the radius $r$ of a spherical cell:
 \begin{equation}
-    r_{final} = 3\cdot\frac{k_{uptake}}{k_{consumption}}
-    \label{eq:r_final}
+    \dot r_{os} = - J_w
+    \label{eq:VGM_Jw_Vos}
 \end{equation}
-For a fixed ratio the slope of the trajectory depends on the absolute values of $k_{uptake}$ and $k_{consumption}$ (Figure \ref{fig:VGM_growth_curves}).
-\begin{figure}[b!]
-    \begin{subfigure}[t]{0.37\textwidth}
-    \centering
-        \includegraphics[width=4cm,keepaspectratio]{graphics/VGM_sigm_curve.png}
-        \caption{Cell volume over time. The predicted single cell growth
-        trajectory is neither an exponential function nor a linear function,
-        but rather sigmoidal.}
-        \label{fig:VGM_sigm_curves}
-    \end{subfigure}
-    \begin{subfigure}[t]{0.55\textwidth}
-    \centering
-        \includegraphics[width=6cm,keepaspectratio]{graphics/VGM_growth_curves.png}
-        \caption{Cell volume over time. The ratio between $k_{uptake}$ and
+Based on a formalism established by Kedem-Katchalsky \cite{Kedem1958} $J_w$ can be described as the difference between the osmotic pressure gradient across the cell membrane and the tugor pressure of the cell wall
+\begin{equation}
+  J_w = - L_p\left(\Pi_t + \Pi_e- \Pi_i\right)
+  \label{eq:Jw}
+\end{equation}
+where $L_p$ is the hydrolic conductivity of the membrane.
+Both tugor pressure and internal osmotic pressure are sensitive to the cell volume and its time derivative.
+This creates a feedback loop on the water flux and the cell growth.
+A quasi steady state of the pressure gradient and cell growth establishes.
+\newline
+The internal osmolyte concentration changes due to osmolyte uptake, consumption and dilution.
+Uptake and consumption are dependent on the cell surface and volume respectively and dilution on both, the cell volume and its derivative.
+Written for the cell radius $r$ it reads
+\begin{equation}
+  \dot c_i = 3\frac{k_{up}}{r} - k_{cons} - 3\frac{c}{r}\dot r
+  \label{eq:ci}
+\end{equation}
+Changes of the cell volume cause elastic and plastic of deformation of the cell wall.
+While elastic deformation increases the tugor pressure, 
+plastic deformation releases it.
+It is associated with the incorporation of new cell wall materials.
+The two types of deformation are described by a Hookean and a Bingham-Norten element connected in series.
+Assuming that the radius $r$ of the cell is much greater than the thickness $d$ of the cell wall the dynamics of the tugor pressure can be described by the following equation
+\begin{equation}
+  \dot\Pi_t = \frac{2Ed}{1-\nu}\frac{\dot r}{r^2} - \Pi_t\frac{\dot r}{r} - \frac{E\Phi}{1-\nu}f_m\left(\Pi_t,\Pi_{ct}\right)
+  \label{eq:Pit}
+\end{equation}
+where $f_m$ is only zero for tugor pressures above the critical pressure for plastic deformation $\Pi_{ct}$.
+\newline
+The model predicts a maximum cell radius, 
+which depends on the osmolyte uptake and consumption rate constants in eq. \ref{eq:ci}
+\begin{equation}
+  r_{max} = 3\cdot\frac{k_{up}}{k_{cons}}
+  \label{eq:rmax}
+\end{equation}
+Fig. \ref{fig:VGM_growth_curves} shows the volume trajectories for different ratios of osmolyte uptake and consumption rate.
+\begin{figure}[H]
+  \includegraphics[width=8cm,keepaspectratio]{graphics/VGM_growth_curves.png}
+  \caption{Temporal evolution of cell volume. The ratio between $k_{uptake}$ and
         $k_{consume}$ determines the maximum cell volume. If this ratio is
         kept constant but $k_{uptake}$ and $k_{consume}$ increased or
-        decreased only the growth rate changes.}
-        \label{fig:VGM_growth_curves}
-    \end{subfigure}
-    \caption{Figures taken from Goldenbogen et al. 2019}
+        decreased only the effective growth rate changes. Figure taken from   \cite{Altenburg2019}}
+  \label{fig:VGM_growth_curves}
 \end{figure}
-If the mother and the bud are coupled via water and osmolyte exchange the bud can only grow when its cell wall extensibility is several orders of magnitude higher than the mother's.
+During their life span \textit{S.cerevisiae} cells do not only grow,
+but divide and birth new cells all the time.
+They undergoes an unequal division with a big mother and a small new born daughter cell, 
+where the daughter cell first develops as a bud on the mother,
+before they split when she is mature enough.
+The VGM models the growth of the bud by first simulating the mother for a time $t_{start}$.
+Then a second, very small cell is spawned, representing the bud.
+Both cells are connected through a bud neck,
+allowing the exchange of water and osmolytes between them.
+The water exchange is driven by their tugor pressure gradient,
+the osmolyte exchange by their osmolyte concentration gradient.
+\begin{align}
+  J_w &= ... + k_{diff}^w\cdot\left(\Pi_t^m - \Pi_t^b\right) \\
+  \dot c_i &= ... + k_{diff}^c\cdot \left(c_i^m - c_i^b\right)
+\end{align}
+A complex balance develops between them.
+A feature which will get greater attention later on was the different cell wall extensibility $\Phi$ of the mother and the bud.
+Fig. \ref{fig:VGM_extensibility} shows their volume trajectories for different ratios $q$ and a schematic representation of their coupling.
 \begin{figure}[H]
     \begin{center}
     \includegraphics[width=10cm,keepaspectratio]{graphics/VGM_extensibility.png}
-    \caption{Figure take from (cite Goldenbogen here!!). (Left) Scheme of mother/bud coupling. (Right) Growth trajectories of mother and bud for different ratios of their cell wall extensibilities.}
+    \caption{Figure take from \cite{Altenburg2019}. (Left) Scheme of mother/bud coupling. (Right) Growth trajectories of mother and bud for different ratios of their cell wall extensibilities. Figure taken from \cite{Altenburg2019}}
     \label{fig:VGM_extensibility}
     \end{center}
 \end{figure}
